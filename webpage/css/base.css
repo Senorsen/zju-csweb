@@ -36,6 +36,9 @@ body {
     display: inline-block;
     margin: 0px 10px 0px 10px;
 }
+.selected {
+    font-weight: bold;
+}
 #nav-top-wrap a {
     color: white;
     text-decoration: none;
@@ -102,7 +105,7 @@ body {
     margin-top: 10px;
     width: 100%;
 }
-#main:after {
+.float-wrap:after {
     content: "\200B";
     display: block;
     height: 0;
@@ -110,28 +113,55 @@ body {
 }
 .panel {
     box-shadow: 0 0 2px #666666;
-    min-height: 400px;
 }
 #left-panel {
-    width: 39%;
+    width: 30%;
     background: #FFF;
     background: rgba(255,255,255,0.8);
 }
 #right-panel {
-    width: 60%;
+    width: 69%;
     height: 100%;
     background: #FFF;
     background: rgba(255,255,255,0.8);
 }
+.right-vline {
+    border-right: solid #ddd 1px;
+    padding-right: 0;
+}
 .fence-layer > .fence {
-    padding: 10px 15px 40px 15px;
+    padding: 10px 15px 15px 15px;
     border-bottom: solid #999 1px;
+    display: block;
 }
 .fence-layer > .fence:last-child {
     border-bottom: none;
+}
+.fence-layer > .fence-small {
+    padding: 4px 10px 10px 10px;
 }
 .fence > h1 {
     font-size: 18px;
     font-weight: normal;
     letter-spacing: 3px;
+}
+.fence a {
+    color: #06C;
+    text-decoration: none;
+    transition: color linear 0.1s;
+}
+.fence a:hover {
+    color: #09F;
+}
+#btnLogin {
+    min-height: 30px;
+    min-width: 90px;
+    text-align: center;
+    margin-top: 3px;
+}
+#lesson-intro-txt {
+    margin-left:10px;
+}
+#lesson-intro-switcher-layer > .switcher {
+    line-height:20px;
 }

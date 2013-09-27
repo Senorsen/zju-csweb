@@ -13,25 +13,41 @@
 
 <body>
 <div id="nav-top-bar">
-<div id="nav-top-wrap"><div id="nav-top-content" class="c-wrap"><div id="top-li-1" class="li"><a href="">首页</a></div><div id="top-li-2" class="li"><a href="">公告通知</a></div><div id="top-li-3" class="li"><a href="">课程信息</a></div><div id="top-li-4" class="li"><a href="">答疑中心</a></div><div id="top-li-5" class="li"><a href="">资源下载</a></div></div></div>
+<div id="nav-top-wrap"><div id="nav-top-content" class="c-wrap"><div id="top-li-1" class="li switcher"><a href="javascript:">首页</a></div><div id="top-li-2" class="li switcher"><a href="javascript:">公告通知</a></div><div id="top-li-3" class="li switcher"><a href="javascript:">课程信息</a></div><div id="top-li-4" class="li switcher"><a href="javascript:">答疑中心</a></div><div id="top-li-5" class="li switcher"><a href="javascript:">资源下载</a></div></div></div>
 <div id="nav-top-white"><div id="nav-info-layer-a" class="c-wrap"><b style="margin-left: 30px">通知：</b><div id="nav-info-layer-b">暂无通知-动态</div></div></div>
 </div>
 <div id="container">
 <div class="c-wrap">
 <div id="banner"></div>
-    <div id="main">
+    <div id="main" class="float-wrap">
         <div id="left-panel" class="left panel fence-layer">
             <div id="login-layer" class="fence">
-            <h1>登录</h1>
+            <h1>用户登录</h1>
             <form id="frmLogin">
-            <table><tr><td>用户名</td><td><input type="text" id="txtUsername"></td></tr><tr><td>密码</td><td><input type="password" id="txtPassword"></td></tr></table>
+            <table style="margin-left:20px" border="0"><tr><td width="68">用户名</td><td width="187"><input type="text" id="txtUsername"></td></tr><tr><td>密码</td><td><input type="password" id="txtPassword" onKeyDown="if(event)k=event.keyCode;else if(event.which)k=event.which;if(k==13)login.submit();"></td></tr><tr><td></td><td><input type="button" id="btnLogin" value="登 录" onclick="login.submit();"></table>
+            </form>
             </div>
-            <div id="login-layer" class="fence">
             
-            </div>
 
         </div>
-        <div id="right-panel" class="right panel"></div>
+        <div id="rp-switcher-layer">
+        <div id="right-panel" class="right panel fence-layer">
+            <div id="lesson-intro-layer" class="fence float-wrap">
+                <div id="lesson-intro-switcher-layer" class="fence-layer left right-vline" style="width:25%">
+                <a class="switcher fence fence-small" href="javascript:">大学计算机基础</a>
+                <a class="switcher fence fence-small" href="javascript:">程序设计基础及实验</a>
+                <a class="switcher fence fence-small" href="javascript:">C程序设计基础</a>
+                <a class="switcher fence fence-small" href="javascript:">Java程序设计基础</a>
+                </div>
+                <div id="lesson-intro-txt-layer" class="fence right" style="width: 73%;text-indent: 2em;font-size: 14px">
+                    <div id="lesson-intro-txt"></div>
+                </div>
+            </div>
+            <div class="fence">
+            afd
+            </div>
+        </div>
+        </div>
     </div>
 </div>
 </div>
