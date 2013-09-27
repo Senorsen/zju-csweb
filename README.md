@@ -1,4 +1,4 @@
 ZJU-cs-basic-opt
 ================
 
-make ZJU'computer basic-teaching website compatible with newer browser &amp; more beautiful. -- QSC frontend Homework 1
+使浙大大计基网站更优美，对新式浏览器兼容性更好的新网页版以及外挂油猴脚本-求是潮前端作业1   
