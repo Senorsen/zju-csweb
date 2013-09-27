@@ -1,0 +1,137 @@
+@charset "utf-8";
+/* ZJU-cs-basic-opt */
+/* base.css */
+
+body {
+    background: url(../image/bg.jpg) repeat;
+    font-color: black;
+    font-size: 15px;
+    font-family: Microsoft Yahei, Yahei, 微软雅黑, sans-serif;
+    overflow-y: scroll;
+}
+#nav-top-bar {
+    z-index: 1000;
+}
+#nav-top-wrap {
+    display: block;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    background-color: black;
+    opacity: 0.8;
+    box-shadow: 0px 0px 1px #000000;
+    transition: opacity ease-out 0.3s;
+    color: white;
+    font-size: 16px;
+    z-index: 1000;
+}
+#nav-top-wrap:hover {
+    opacity: 1;
+    box-shadow: 0px 0px 3px #000000;
+}
+#nav-top-wrap .li {
+    display: inline-block;
+    margin: 0px 10px 0px 10px;
+}
+#nav-top-wrap a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity linear 0.1s;
+}
+#nav-top-wrap a:hover {
+    opacity: 1;
+}
+#nav-top-white {
+    position: fixed;
+    top: 43px;
+    left :0;
+    opacity: 0.8;
+    height: 34px;
+    line-height: 34px;
+    font-size: 10pt;
+    width:100%;
+    background-color: #fafafa;
+    background-repeat: repeat-x;
+    border: 1px solid #d4d4d4;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+    background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+    opacity: 0.8;
+    z-index: 1000;
+}
+#nav-info-layer-a {
+    font-weight: normal;
+}
+#nav-info-layer-b {
+    display: inline;
+    margin-left: 20px;
+    color: #39C;
+}
+.c-wrap {
+    width: 970px;
+    top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+#banner {
+    background: url(../image/banner.jpg) top left no-repeat;
+    width: 970px;
+    height: 150px;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    box-shadow: 0 0 2px black;
+    z-index: 0;
+}
+#container {
+    z-index: 0;
+    position: relative;
+    top: 90px;
+}
+#main {
+    margin-top: 10px;
+    width: 100%;
+}
+#main:after {
+    content: "\200B";
+    display: block;
+    height: 0;
+    clear: both;
+}
+.panel {
+    box-shadow: 0 0 2px #666666;
+    min-height: 400px;
+}
+#left-panel {
+    width: 39%;
+    background: #FFF;
+    background: rgba(255,255,255,0.8);
+}
+#right-panel {
+    width: 60%;
+    height: 100%;
+    background: #FFF;
+    background: rgba(255,255,255,0.8);
+}
+.fence-layer > .fence {
+    padding: 10px 15px 40px 15px;
+    border-bottom: solid #999 1px;
+}
+.fence-layer > .fence:last-child {
+    border-bottom: none;
+}
+.fence > h1 {
+    font-size: 18px;
+    font-weight: normal;
+    letter-spacing: 3px;
+}
