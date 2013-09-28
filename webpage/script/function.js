@@ -9,3 +9,5 @@ function page()
 page.prototype = {
     
 }
+
+$(function(){var test = new page();});
