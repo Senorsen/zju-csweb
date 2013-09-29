@@ -5,6 +5,7 @@
 // @description  Make Zhejiang University's Computer science webpage more correctly & beautiful
 // @match      http://blackwhite.8866.org/cstcx/web/index.asp?*
 // @match      http://10.71.45.100/cstcx/web/index.asp?*
+// @downloadURL   http://lyxss.tk/djj/ZJU_CS_WEB.js
 // @copyright  2012+, Senor
 // @run-at document-start
 // ==/UserScript==
