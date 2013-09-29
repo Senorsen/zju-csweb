@@ -2,5 +2,5 @@ ZJU-cs-basic-opt
 ================
 
 
-油猴脚本下载地址2： http://lyxss.tk/djj/ZJU_CS_WEB.js
+userscript:  http://userscripts.org/scripts/show/178811
 或本repo的js文件夹
