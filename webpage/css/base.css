@@ -105,10 +105,16 @@ body {
     margin-top: 10px;
     width: 100%;
 }
+.float-wrap-small:after {
+    content: "\200B";
+    display: block;
+    height: 0px;
+    clear: both;
+}
 .float-wrap:after {
     content: "\200B";
     display: block;
-    height: 0;
+    height: 30px;
     clear: both;
 }
 .panel {
@@ -160,8 +166,14 @@ body {
     margin-top: 3px;
 }
 #lesson-intro-txt {
-    margin-left:10px;
+    margin-left: 10px;
 }
 #lesson-intro-switcher-layer > .switcher {
-    line-height:20px;
+    line-height: 20px;
+}
+#link-layer {
+    margin-left: 20px;
+}
+#link-layer > a {
+    line-height: 22px;
 }

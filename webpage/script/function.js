@@ -1,13 +1,43 @@
 // ZJU-cs-basic-opt
 // function.js - 功能函数
 
-function page()
+function c_cntr()
 {
-    this.pageSwitcher = new tab_switcher($("#nav-top-content > .switcher"), $("#rp-switcher-layer"), [$("#rp-switcher-layer").html(),'','','','']);
-    this.lessonSwitcher = new tab_switcher($("#lesson-intro-switcher-layer > .switcher"), $("#lesson-intro-txt"), ['<div>我自己给不了我自己一个理由从现在这种状态中转换一下，当然你更不可能给我一个。。。反正不放在心上不是一直是我的特长么，反正这样不是很好么，反正我也不胆大也没多余精力么，操心毛线。</div>','','','']);
+    this.model = new cmodel();
+    this.view = new tot_view();
+    this.view_init();
 }
-page.prototype = {
-    
+c_cntr.prototype = {
+    login: function() {
+        var data = $("#frmLogin").serialize();
+        var ret = this.model.fetch("login", data);
+        if (ret.login_succ)
+        {
+            //登录成功，反馈view
+            this.user_o = this.model.fetch("login_succ");
+            this.view.loginview(this.user_o.user_info);
+        } else {
+            //登录失败，同样要反馈view
+            console.debug(ret)
+            if (ret.login_usrfail) ;
+            else (ret.login_pwdfail);
+        }
+    },
+    view_init: function() {
+        return ;
+        var o_index = this.model.fetch('index');
+        this.view.normalview(o_index.lesson_title, o_index.lesson_info);
+    }
 }
 
-$(function(){var test = new page();});
+init();
+
+function init()
+{
+    if (typeof jQuery == 'undefined' || typeof cmodel == 'undefined' || typeof tab_switcher == 'undefined')
+    {
+        setTimeout(init, 100);
+        return;
+    }
+    controller = new c_cntr();
+}
