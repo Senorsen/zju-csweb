@@ -9,6 +9,9 @@ body {
     font-family: Microsoft Yahei, Yahei, 微软雅黑, sans-serif;
     overflow-y: scroll;
 }
+a {
+    cursor: pointer;
+}
 #nav-top-bar {
     z-index: 1000;
 }
@@ -176,4 +179,28 @@ body {
 }
 #link-layer > a {
     line-height: 22px;
+}
+.myalert {
+    opacity: 0.8;
+    text-shadow: 0px 0px 1px #fff;
+    border: none;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 4px #888;
+    position: fixed;
+    z-index: 1000;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 50px;
+    margin-left: -200px;
+    margin-top: -25px;
+    text-align: center;
+    display: block;
+    padding-top: 26px;
+    font-size: 15px;
+    background-color: #333;
+    cursor: pointer;
+    color: #eeeeee;
 }

@@ -89,9 +89,19 @@ function tot_view()
     this.lessonSwitcher = new tab_switcher($("#lesson-intro-switcher-layer > .switcher"), $("#lesson-intro-txt"), "inner");
 }
 tot_view.prototype = {
-    loginview: function(txt) {
+    loginview: function(txt, issucc) {
         var $login_layer = $("#login-layer");
-        $login_layer.html('<h1>用户信息</h1><div id="user-info" style="margin-left:20px;">'+txt+'</div>');
+        if (issucc)
+        {
+            $login_layer.html('<h1>用户信息</h1><div id="user-info" style="margin-left:20px;">'+txt+'<br><br><center><input style="width:120px;height:35px" type=button value=退出登录 onclick="controller.logout()"></div>');
+        }
+        else
+        {
+            this.myAlert(txt);
+        }
+    },
+    loginshow: function() {
+        $("#login-layer").html('<h1>用户登录</h1><form id="frmLogin">            <table style="margin-left:20px" border="0"><tr><td width="68">用户名</td><td width="187"><input type="text" id="txtUsername" name="txtUser"></td></tr><tr><td>密码</td><td><input type="password" id="txtPassword" name="txtPwd" onKeyDown="if(event)k=event.keyCode;else if(event.which)k=event.which;if(k==13)controller.login();"></td></tr><tr><td></td><td><input type="button" id="btnLogin" value="登 录" onclick="controller.login();"></table>            </form>');
     },
     normalview: function(title_o, txt_o) {
         this.lessonSwitcher.clear();
@@ -101,5 +111,16 @@ tot_view.prototype = {
                                         txt_o[i]);
         }
         this.lessonSwitcher.update();
+    },
+    myAlert: function(txt) {
+        var aid = 'alert'+Math.random();
+        var $o = $('<div id="'+aid+'" class="myalert">'+txt+'</div>');
+        $(document.body).append($o);
+        _myAlert_close = function() {
+            $o.fadeOut(1000, "linear", function() {
+                $o.remove();
+            });
+        };
+        setTimeout(_myAlert_close, 2000);
     }
 }

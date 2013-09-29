@@ -22,20 +22,26 @@ function cmodel()
     });
     this.r = {
         index: {
-            lesson_announce: [/<marquee direction="up" height="100" onmouseout="this.start\(\)" onmouseover="this.stop\(\)" scrollamount="1" scrolldelay="40">([\s\S]+?)<\/marquee>/g, 1],
+            lesson_announce: ["function", function($o) {
+                $ob = $o.find('span[style="font-weight: 400"]');
+                var ret = [];
+                for (var i=0;i<$ob.length;i++)
+                    ret.push($ob.eq(i).html());
+                return ret;
+            }],
             _method: "GET"
         },
         login: {
-            login_usrfail: [/用户名（请用学号）不存在,[^']+/, 0],
-            login_pwdfail: [/密码错误/, 0],
-            login_succ: [/index_student[.]asp/, 0],
+            login_usrfail: ["reg", /用户名（请用学号）不存在,[^']+/, 0],
+            login_pwdfail: ["reg", /密码错误/, 0],
+            login_succ: ["reg", /index_student[.]asp/, 0],
             _method: "POST"
         },
         login_succ: {
-            user_info: [/<TD  align=left>(.+?)<\/TD>/g, 1],
-            lesson_info: [/<TD vAlign=top><SPAN[\s\S^']+title="([^"]+)/g, 1],
-            lesson_announce: [/scrollDelay=200>(.+?)<\/MARQUEE><\/TD><\/TR><\/TBODY><\/TABLE><\/TD><\/TR>/g, 1],
-            lesson_title: [/width=300 align=left>(.+?)<\/TD><\/TR>/g, 1],
+            user_info: ["reg", /<TD  align=left>(.+?)<\/TD>/, 1],
+            lesson_info: ["reg", /<TD vAlign=top><SPAN[\s\S^']+title="([^"]+)/, 1],
+            lesson_announce: ["reg", /scrollDelay=200>(.+?)<\/MARQUEE><\/TD><\/TR><\/TBODY><\/TABLE><\/TD><\/TR>/, 1],
+            lesson_title: ["reg", /width=300 align=left>(.+?)<\/TD><\/TR>/, 1],
             _method: "GET"
         },
         
@@ -71,16 +77,33 @@ cmodel.prototype = {
         {
             if (e != '_method')
             {
-                try {
-                    retobj[e] = [];
-                    var matches = retstr.match(f_obj[e][0]);
-                    for (var i=1;i<matches.length;i++)
-                        retobj[e].push(matches[i]);
-                }
-                catch(e)
+                if (f_obj[e][0] == 'reg')
                 {
-                    retobj[e] = 0;
+                    if (f_obj[e][1].test(retstr))
+                    {
+                        try {
+                            retobj[e] = [];
+                            var matches = retstr.match(f_obj[e][1]);
+                            if (f_obj[e][1].global) retobj[e] = matches;
+                            else
+                            for (var i=1;i<matches.length;i++)
+                                retobj[e].push(matches[i]);
+                        }
+                        catch(e)
+                        {
+                            retobj[e] = 0;
+                        }
+                    }
+                    else
+                    {
+                        retobj[e] = 0;
+                    }
                 }
+                else
+                {
+                    retobj[e] = f_obj[e][1]($o);
+                }
+                
             }
         }
         return retobj;
