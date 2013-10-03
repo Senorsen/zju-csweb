@@ -1,5 +1,5 @@
 // ZJU-cs-basic-opt
-// function.js - ¹¦ÄÜº¯Êı
+// function.js - åŠŸèƒ½å‡½æ•°
 
 function c_cntr()
 {
@@ -17,16 +17,16 @@ c_cntr.prototype = {
         console.debug(ret);
         if (ret.login_succ)
         {
-            //µÇÂ¼³É¹¦£¬·´À¡view
+            //ç™»å½•æˆåŠŸï¼Œåé¦ˆview
             var t = this;
             this.model.fetch("login_succ", '', function(a) {
                 t.user_o = a;
                 t.view.loginview(t.user_o.user_info, 1);
-                t.view.normalview(a.lesson_title, a.lesson_info, function(b){$("#nav-info-layer-b").html(a.lesson_title[b]+'£º'+a.lesson_announce[b])});
+                t.view.normalview(a.lesson_title, a.lesson_info, function(b){$("#nav-info-layer-b").html(a.lesson_title[b]+'ï¼š'+a.lesson_announce[b])});
                 t.view.showtask(a.task_title, a.task_obj);
             });
         } else {
-            //µÇÂ¼Ê§°Ü£¬Í¬ÑùÒª·´À¡view
+            //ç™»å½•å¤±è´¥ï¼ŒåŒæ ·è¦åé¦ˆview
             if (ret.login_fail) this.view.loginview(ret.login_fail, 0);
         }
     },

@@ -1,5 +1,5 @@
 // ZJU-cs-basic-opt
-// model.js - »ñÈ¡Êı¾İ
+// model.js - è·å–æ•°æ®
 
 var DEBUG = 1;
 var url_list = {
@@ -16,9 +16,9 @@ var url_list = {
 function cmodel()
 {
     jQuery.ajaxSetup({
-        async: false,       //Èõ²ËÌ«ÈõËùÒÔºÜÎŞÄÎ
+        async: false,       //å¼±èœå¤ªå¼±æ‰€ä»¥å¾ˆæ— å¥ˆ
         error: function() {
-            alert("·¢ËÍÊı¾İÇëÇó³ö´í¡£Çë¼ì²éÍøÂçÁ¬½ÓÊÇ·ñÁ¼ºÃ");
+            alert("å‘é€æ•°æ®è¯·æ±‚å‡ºé”™ã€‚è¯·æ£€æŸ¥ç½‘ç»œè¿æ¥æ˜¯å¦è‰¯å¥½");
         },
         contentType: "application/x-www-form-urlencoded; charset=GB2312",
     });
@@ -34,7 +34,7 @@ function cmodel()
             _method: "GET"
         },
         login: {
-            login_fail: ["reg", /alert\('(.+?)'\)/, 1],             //×¢ÊÍÒ»·¢£ºregÎªregexpµÄËõĞ´£¬ÕıÔò±í´ïÊ½£»functionÎªº¯Êı¡£
+            login_fail: ["reg", /alert\('(.+?)'\)/, 1],             //æ³¨é‡Šä¸€å‘ï¼šregä¸ºregexpçš„ç¼©å†™ï¼Œæ­£åˆ™è¡¨è¾¾å¼ï¼›functionä¸ºå‡½æ•°ã€‚
             login_succ: ["reg", /index_student[.]asp/, 0],
             _method: "POST"
         },
@@ -62,14 +62,14 @@ function cmodel()
                 return ret;
             }],
             task_title: ["function", function() {
-                return ['ÉÏ»úÊµÑé', '¿Î³Ì×÷Òµ'];
+                return ['ä¸Šæœºå®éªŒ', 'è¯¾ç¨‹ä½œä¸š'];
             }],
             task_obj: ["function", function($o) {
                 var retobj = [];
                 $o.find("a").each(function() {
-                    if (this.innerHTML == 'ÉÏ»úÊµÑé') 
+                    if (this.innerHTML == 'ä¸Šæœºå®éªŒ') 
                     retobj[0] = this.href.replace(/&amp;/g, '&');
-                    if (this.innerHTML == '¿Î³Ì×÷Òµ') 
+                    if (this.innerHTML == 'è¯¾ç¨‹ä½œä¸š') 
                     retobj[1] = this.href.replace(/&amp;/g, '&');
                 });
                 return retobj;
@@ -84,22 +84,22 @@ function cmodel()
     }
     catch(e) {
         try {
-            console.error('´íÎó£ºÎŞ·¨»ñÖª¾ßÌåµÄÁ´½Ó²ÎÊı');
+            console.error('é”™è¯¯ï¼šæ— æ³•è·çŸ¥å…·ä½“çš„é“¾æ¥å‚æ•°');
         }
         catch(e2) {
-            //·ÀÖ¹Ã»ÓĞconsole¶ÔÏó
+            //é˜²æ­¢æ²¡æœ‰consoleå¯¹è±¡
         }
     }
     if ($.browser.mozilla)      //for firefox
     {
-        alert('±¾½Å±¾²»ÄÜÁ¼ºÃµØÖ§³Öfirefoxä¯ÀÀÆ÷£¬ÓÈÆäÊÇÔÚÆæ¹ÖµÄ±àÂëÎÊÌâ·½Ãæ');
+        alert('æœ¬è„šæœ¬ä¸èƒ½è‰¯å¥½åœ°æ”¯æŒfirefoxæµè§ˆå™¨ï¼Œå°¤å…¶æ˜¯åœ¨å¥‡æ€ªçš„ç¼–ç é—®é¢˜æ–¹é¢');
     }
 }
 cmodel.prototype = {
-    _ffajax: function(url, data, method, callback) {      //Í¨¹ıiframeÀ´Ä£Äâajax¡£µ°ÌÛµÄĞ¡É­É­µÄÎŞÄÎÖ®¾Ù£¡¡£ 2013Äê9ÔÂ30ÈÕ3:43:59
+    _ffajax: function(url, data, method, callback) {      //é€šè¿‡iframeæ¥æ¨¡æ‹Ÿajaxã€‚è›‹ç–¼çš„å°æ£®æ£®çš„æ— å¥ˆä¹‹ä¸¾ï¼ã€‚ 2013å¹´9æœˆ30æ—¥3:43:59
         var frmAjax = document.createElement('form');
         frmAjax.target='encodeiframe';
-        if (typeof data == 'string')    // 2013Äê9ÔÂ30ÈÕ4:41:38
+        if (typeof data == 'string')    // 2013å¹´9æœˆ30æ—¥4:41:38
         {
             var data2 = new Array();
             var o1 = data.split('&');

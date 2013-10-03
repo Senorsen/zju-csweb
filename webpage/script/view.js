@@ -1,5 +1,5 @@
 // ZJU-cs-basic-opt
-// view.js - ÊÓ¾õĞ§¹û£¬ÏÔÊ¾×é¼şµÈ
+// view.js - è§†è§‰æ•ˆæœï¼Œæ˜¾ç¤ºç»„ä»¶ç­‰
 
 
 
@@ -14,7 +14,7 @@ function tab_switcher($obj_switcherlayer, $obj_layer, data, callback, defaultPag
     this.callback = typeof callback=='function'?callback:function(){};
     
     this.update();
-    if (typeof data == "object") this.data = data;  //Êı×é
+    if (typeof data == "object") this.data = data;  //æ•°ç»„
     else if (typeof data == "string" || typeof data == "undefined")
     {
         if (data == "inner" || typeof data == "undefined")
@@ -46,7 +46,7 @@ tab_switcher.prototype = {
     clear: function() {
         this.$layer.html('');
         this.$switcher.remove();
-        return this;    //Á´Ê½·ÃÎÊ 2013Äê10ÔÂ1ÈÕ0:43:55 ¹úÇì½Ú£¡
+        return this;    //é“¾å¼è®¿é—® 2013å¹´10æœˆ1æ—¥0:43:55 å›½åº†èŠ‚ï¼
     },
     insert: function(titlehtml, html) {
         var thisnum = this.$layer.children().size();
@@ -95,7 +95,7 @@ tab_switcher.prototype = {
 
 
 ////////////////////////////////////
-//     ÕâÊÇÒ»¸öÍ¨ÓÃµÄÊÓÍ¼Àà       //
+//     è¿™æ˜¯ä¸€ä¸ªé€šç”¨çš„è§†å›¾ç±»       //
 ////////////////////////////////////
 function tot_view()
 {
@@ -108,7 +108,7 @@ tot_view.prototype = {
         var $login_layer = $("#login-layer");
         if (issucc)
         {
-            $login_layer.html('<h1>ÓÃ»§ĞÅÏ¢</h1><div id="user-info" style="margin-left:20px;">'+txt+'<br><br><center><input style="width:120px;height:35px" type=button value=ÍË³öµÇÂ¼ onclick="controller.logout()"></div>');
+            $login_layer.html('<h1>ç”¨æˆ·ä¿¡æ¯</h1><div id="user-info" style="margin-left:20px;">'+txt+'<br><br><center><input style="width:120px;height:35px" type=button value=é€€å‡ºç™»å½• onclick="controller.logout()"></div>');
         }
         else
         {
@@ -116,7 +116,7 @@ tot_view.prototype = {
         }
     },
     loginshow: function() {
-        $("#login-layer").html('<h1>ÓÃ»§µÇÂ¼</h1><form id="frmLogin">            <table style="margin-left:20px" border="0"><tr><td width="68">ÓÃ»§Ãû</td><td width="187"><input type="text" id="txtUsername" name="txtUser"></td></tr><tr><td>ÃÜÂë</td><td><input type="password" id="txtPassword" name="txtPwd" onKeyDown="if(event)k=event.keyCode;else if(event.which)k=event.which;if(k==13)controller.login();"></td></tr><tr><td></td><td><input type="button" id="btnLogin" value="µÇ Â¼" onclick="controller.login();"></table>            </form>');
+        $("#login-layer").html('<h1>ç”¨æˆ·ç™»å½•</h1><form id="frmLogin">            <table style="margin-left:20px" border="0"><tr><td width="68">ç”¨æˆ·å</td><td width="187"><input type="text" id="txtUsername" name="txtUser"></td></tr><tr><td>å¯†ç </td><td><input type="password" id="txtPassword" name="txtPwd" onKeyDown="if(event)k=event.keyCode;else if(event.which)k=event.which;if(k==13)controller.login();"></td></tr><tr><td></td><td><input type="button" id="btnLogin" value="ç™» å½•" onclick="controller.login();"></table>            </form>');
     },
     normalview: function(title_o, txt_o, callback) {
         this.lessonSwitcher.callback = typeof callback=='function'?callback:function(){};
