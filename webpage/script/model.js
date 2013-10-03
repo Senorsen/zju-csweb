@@ -1,6 +1,7 @@
 // ZJU-cs-basic-opt
-// model.js - è·å–æ•°æ®
+// model.js - »ñÈ¡Êı¾İ
 
+var DEBUG = 1;
 var url_list = {
     index: "index.asp",
     login: "login/check.asp",
@@ -15,10 +16,11 @@ var url_list = {
 function cmodel()
 {
     jQuery.ajaxSetup({
-        async: false,       //å¼±èœå¤ªå¼±æ‰€ä»¥å¾ˆæ— å¥ˆ
+        async: false,       //Èõ²ËÌ«ÈõËùÒÔºÜÎŞÄÎ
         error: function() {
-            alert("å‘é€æ•°æ®è¯·æ±‚å‡ºé”™ã€‚è¯·æ£€æŸ¥ç½‘ç»œè¿æ¥æ˜¯å¦è‰¯å¥½");
-        }
+            alert("·¢ËÍÊı¾İÇëÇó³ö´í¡£Çë¼ì²éÍøÂçÁ¬½ÓÊÇ·ñÁ¼ºÃ");
+        },
+        contentType: "application/x-www-form-urlencoded; charset=GB2312",
     });
     this.r = {
         index: {
@@ -32,16 +34,46 @@ function cmodel()
             _method: "GET"
         },
         login: {
-            login_usrfail: ["reg", /ç”¨æˆ·åï¼ˆè¯·ç”¨å­¦å·ï¼‰ä¸å­˜åœ¨,[^']+/, 0],
-            login_pwdfail: ["reg", /å¯†ç é”™è¯¯/, 0],
+            login_fail: ["reg", /alert\('(.+?)'\)/, 1],             //×¢ÊÍÒ»·¢£ºregÎªregexpµÄËõĞ´£¬ÕıÔò±í´ïÊ½£»functionÎªº¯Êı¡£
             login_succ: ["reg", /index_student[.]asp/, 0],
             _method: "POST"
         },
         login_succ: {
             user_info: ["reg", /<TD  align=left>(.+?)<\/TD>/, 1],
-            lesson_info: ["reg", /<TD vAlign=top><SPAN[\s\S^']+title="([^"]+)/, 1],
-            lesson_announce: ["reg", /scrollDelay=200>(.+?)<\/MARQUEE><\/TD><\/TR><\/TBODY><\/TABLE><\/TD><\/TR>/, 1],
-            lesson_title: ["reg", /width=300 align=left>(.+?)<\/TD><\/TR>/, 1],
+            lesson_info: ["function", function($o) {
+                $ob = $o.find('span[style="font-weight: 400"]');
+                var ret = [];
+                for (var i=0;i<$ob.length;i++)
+                    ret.push($ob.eq(i).html());
+                return ret;
+            }],
+            lesson_announce: ["function", function($o) {
+                $ob = $o.find('td > marquee');
+                var ret = [];
+                for (var i=0;i<$ob.length;i++)
+                    ret.push($ob.eq(i).html());
+                return ret;
+            }],
+            lesson_title: ["function", function($o) {
+                $ob = $o.find('td[valign=middle] > b');
+                var ret = [];
+                for (var i=0;i<$ob.length;i++)
+                    ret.push($ob.eq(i).html());
+                return ret;
+            }],
+            task_title: ["function", function() {
+                return ['ÉÏ»úÊµÑé', '¿Î³Ì×÷Òµ'];
+            }],
+            task_obj: ["function", function($o) {
+                var retobj = [];
+                $o.find("a").each(function() {
+                    if (this.innerHTML == 'ÉÏ»úÊµÑé') 
+                    retobj[0] = this.href.replace(/&amp;/g, '&');
+                    if (this.innerHTML == '¿Î³Ì×÷Òµ') 
+                    retobj[1] = this.href.replace(/&amp;/g, '&');
+                });
+                return retobj;
+            }],
             _method: "GET"
         },
         
@@ -52,26 +84,85 @@ function cmodel()
     }
     catch(e) {
         try {
-            console.error('é”™è¯¯ï¼šæ— æ³•è·çŸ¥å…·ä½“çš„é“¾æ¥å‚æ•°');
+            console.error('´íÎó£ºÎŞ·¨»ñÖª¾ßÌåµÄÁ´½Ó²ÎÊı');
         }
         catch(e2) {
-            //é˜²æ­¢æ²¡æœ‰consoleå¯¹è±¡
+            //·ÀÖ¹Ã»ÓĞconsole¶ÔÏó
         }
+    }
+    if ($.browser.mozilla)      //for firefox
+    {
+        alert('±¾½Å±¾²»ÄÜÁ¼ºÃµØÖ§³Öfirefoxä¯ÀÀÆ÷£¬ÓÈÆäÊÇÔÚÆæ¹ÖµÄ±àÂëÎÊÌâ·½Ãæ');
     }
 }
 cmodel.prototype = {
-    fetch: function(location, data) {
+    _ffajax: function(url, data, method, callback) {      //Í¨¹ıiframeÀ´Ä£Äâajax¡£µ°ÌÛµÄĞ¡É­É­µÄÎŞÄÎÖ®¾Ù£¡¡£ 2013Äê9ÔÂ30ÈÕ3:43:59
+        var frmAjax = document.createElement('form');
+        frmAjax.target='encodeiframe';
+        if (typeof data == 'string')    // 2013Äê9ÔÂ30ÈÕ4:41:38
+        {
+            var data2 = new Array();
+            var o1 = data.split('&');
+            for (var i in o1)
+            {
+                var o2 = o1[i].split('=');
+                data2[o2[0]] = o2[1];
+            }
+            data = data2;
+        }
+        frmAjax.method = method;
+        frmAjax.action = url;
+        frmAjax.innerHTML = "";
+        for (var i in data)
+        {
+            var o = document.createElement('input');
+            o.type = 'hidden';
+            o.name = i;
+            o.value = data[i];
+            frmAjax.appendChild(o);
+        }
+        frmAjax.id = "frmAjax";
+        document.body.appendChild(frmAjax);
+        var obj_if = document.createElement('iframe');
+        obj_if.id = obj_if.name = 'encodeiframe';
+        obj_if.onload = _ready;
+        document.body.appendChild(obj_if);
+        document.getElementById("frmAjax").submit();
+        var isfinish = 0, retstr = '';
+        function _ready() {
+            isfinish = 1;
+            encodeiframe = window.parent.document.getElementById('encodeiframe');
+            retstr = encodeiframe.document.body.innerHTML;
+            window.parent.document.getElementById("encodeiframe").parentNode.removeChild(window.parent.document.getElementById("encodeiframe"));
+            window.parent.document.getElementById("frmAjax").parentNode.removeChild(window.parent.document.getElementById("frmAjax"));
+            alert(retstr)
+            callback(retstr);
+        }
+    },
+    fetch: function(location, data, callback) {
         if (typeof data == 'undefined') data = '';
         var f_obj = this.r[location];
-        var retstr = '', retobj = {};
-        if (f_obj._method == 'GET')
+        var retstr = '';
+        if (!$.browser.mozilla)
         {
-            $.get(url_list[location], this.linksuffix+'&'+data, function(data){retstr=data;}, "text");
+            if (f_obj._method == 'GET')
+            {
+                $.get(url_list[location], this.linksuffix+'&'+data, function(data){retstr=data;}, "html");
+            }
+            else if(f_obj._method == 'POST')
+            {
+                $.post(url_list[location]+this.linksuffix, data, function(data){retstr=data;}, "html");
+            }
         }
-        else if(f_obj._method == 'POST')
+        else
         {
-            $.post(url_list[location]+this.linksuffix, data, function(data){retstr=data;}, "text");
+            this._ffajax(url_list[location]+this.linksuffix, data, f_obj._method, function(data){retstr=data});
         }
+        callback(this._fetch_cb(retstr, f_obj));
+        
+    },
+    _fetch_cb: function(retstr, f_obj) {
+        var retobj = {};
         $o = $(retstr);
         for (e in f_obj)
         {
@@ -84,10 +175,7 @@ cmodel.prototype = {
                         try {
                             retobj[e] = [];
                             var matches = retstr.match(f_obj[e][1]);
-                            if (f_obj[e][1].global) retobj[e] = matches;
-                            else
-                            for (var i=1;i<matches.length;i++)
-                                retobj[e].push(matches[i]);
+                            retobj[e] = matches[f_obj[e][2]];
                         }
                         catch(e)
                         {
@@ -106,6 +194,8 @@ cmodel.prototype = {
                 
             }
         }
+        if (DEBUG) console.debug(retobj);
         return retobj;
     }
 }
+

@@ -1,32 +1,34 @@
 // ZJU-cs-basic-opt
-// function.js - åŠŸèƒ½å‡½æ•°
+// function.js - ¹¦ÄÜº¯Êı
 
 function c_cntr()
 {
     this.model = new cmodel();
     this.view = new tot_view();
-    this.view_init();
+    //this.view_init();
 }
 c_cntr.prototype = {
     login: function() {
         var data = $("#frmLogin").serialize();
-        var ret = this.model.fetch("login", data);
+        t = this;
+        this.model.fetch("login", data, function(a){t._login(a)});
+    },
+    _login: function(ret) {
         console.debug(ret);
         if (ret.login_succ)
         {
-            //ç™»å½•æˆåŠŸï¼Œåé¦ˆview
-            this.user_o = this.model.fetch("login_succ");
-            this.view.loginview(this.user_o.user_info, 1);
+            //µÇÂ¼³É¹¦£¬·´À¡view
+            var t = this;
+            this.model.fetch("login_succ", '', function(a) {
+                t.user_o = a;
+                t.view.loginview(t.user_o.user_info, 1);
+                t.view.normalview(a.lesson_title, a.lesson_info, function(b){$("#nav-info-layer-b").html(a.lesson_title[b]+'£º'+a.lesson_announce[b])});
+                t.view.showtask(a.task_title, a.task_obj);
+            });
         } else {
-            //ç™»å½•å¤±è´¥ï¼ŒåŒæ ·è¦åé¦ˆview
-            if (ret.login_usrfail) this.view.loginview('ç”¨æˆ·åä¸å­˜åœ¨ï¼Œè¯·ç¡®è®¤ä»»è¯¾è€å¸ˆé€‰æ‹©æ­£ç¡®', 0);
-            else if(ret.login_pwdfail) this.view.loginview('å¯†ç é”™è¯¯', 0);
+            //µÇÂ¼Ê§°Ü£¬Í¬ÑùÒª·´À¡view
+            if (ret.login_fail) this.view.loginview(ret.login_fail, 0);
         }
-    },
-    view_init: function() {
-        return ;
-        var o_index = this.model.fetch('index');
-        this.view.normalview(o_index.lesson_title, o_index.lesson_info);
     },
     logout: function() {
         $.get("login/logout.asp");
@@ -34,7 +36,9 @@ c_cntr.prototype = {
     }
 }
 
-init();
+$(document).ready(function() {
+	init();
+});
 
 function init()
 {

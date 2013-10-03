@@ -128,9 +128,8 @@ a {
     background: #FFF;
     background: rgba(255,255,255,0.8);
 }
-#right-panel {
+.right-panel {
     width: 69%;
-    height: 100%;
     background: #FFF;
     background: rgba(255,255,255,0.8);
 }
@@ -145,6 +144,7 @@ a {
 }
 .fence-layer > .fence:last-child {
     border-bottom: none;
+    padding-bottom: 25px;
 }
 .fence-layer > .fence-small {
     padding: 4px 10px 10px 10px;
@@ -170,6 +170,7 @@ a {
 }
 #lesson-intro-txt {
     margin-left: 10px;
+    position: relative;
 }
 #lesson-intro-switcher-layer > .switcher {
     line-height: 20px;
@@ -203,4 +204,7 @@ a {
     background-color: #333;
     cursor: pointer;
     color: #eeeeee;
+}
+.fence-content {
+    margin-left: 30px;
 }

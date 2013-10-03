@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>uso;去除js</title>
+<script language="javascript">
+// convert html code to js code. by Senorsen
+// 2013/9/29
+function go()
+{
+    var urlprefix = document.getElementById('baseurl').value;
+    var oldcode = document.getElementById('code').value;
+    oldcode = oldcode.replace(/<script(.+?)<\/script>/g, '');
+    oldcode = oldcode.replace(/href="([^h][^"]*|.[^t][^"]*|..[^t][^"]+|...[^p][^"]+)/g, 'href=\"'+urlprefix+'$1');
+    var txthead = /<head>([\s\S]+?)<\/head>/.exec(oldcode)[1];
+    var txtbody = /<body>([\s\S]+?)<\/body>/.exec(oldcode)[1];
+    var result = html2js("document.head.innerHTML", txthead) + html2js("document.body.innerHTML", txtbody);
+    return result;
+    function html2js(container, html)
+    {
+        //return container+"=\""+a2s(html.replace(/\\/g,"\\\\").replace(/\'/g,"\\\'").replace(/\"/g,"\\\"").split("\n"))+"\";";
+        return container+"=unescape(\""+escape(html).replace(/\\/g,"\\\\").replace(/\'/g,"\\\'").replace(/\"/g,"\\\"")+"\");";
+        function a2s(a)
+        {
+            var r='';
+            for(var b in a)if(typeof a[b]!='undefiend')r+=a[b];
+            return r;
+        }
+    }
+}
+</script>
+</head>
+
+<body>
+<textarea id="baseurl" cols="40" rows="!">http://lyxss.tk/djj/</textarea><br>
+<textarea id="code" cols="100" rows="30"></textarea>
+<button onclick="document.getElementById('code').value=go();">开始转换！</button>
+</body>
+</html>
