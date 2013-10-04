@@ -148,9 +148,16 @@ tot_view.prototype = {
         return {$:$o, aid:aid};
     },
     showLoading: function(time) {
-        this.loadingTag = this.myAlert("加载中，请稍候……", time);
+        setTimeout(function() {
+            this.loadingTag = this.myAlert("加载中，请稍候……", time);
+        },350);
     },
     showLoaded: function() {
-        this.loadingTag.$.fadeOut(100, "swing", function(){$(this).remove()});
+        try {
+            this.loadingTag.$.fadeOut(100, "swing", function(){$(this).remove()});
+        }
+        catch(e)
+        {
+        }
     }
 }
