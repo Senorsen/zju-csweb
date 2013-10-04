@@ -135,15 +135,22 @@ tot_view.prototype = {
             $("#task-list").css('margin-left', '40px').append('<a x-url="'+url[i]+'" onclick="controller.switchtask('+i+');">'+title[i]+'</a>&nbsp;&nbsp;&nbsp;&nbsp;');
         }
     },
-    myAlert: function(txt) {
-        var aid = 'alert'+Math.random();
-        var $o = $('<div id="'+aid+'" class="myalert">'+txt+'</div>');
+    myAlert: function(txt, time) {
+        var aid = Math.random().toString();
+        var $o = $('<div id="alert'+aid+'" class="myalert">'+txt+'</div>');
         $(document.body).append($o);
         _myAlert_close = function() {
             $o.fadeOut(1000, "linear", function() {
                 $o.remove();
             });
         };
-        setTimeout(_myAlert_close, 2000);
+        setTimeout(_myAlert_close, typeof time=='undefined'?2000:time);
+        return {$:$o, aid:aid};
+    },
+    showLoading: function(time) {
+        this.loadingTag = this.myAlert("加载中，请稍候……", time);
+    },
+    showLoaded: function() {
+        this.loadingTag.$.fadeOut(100, "swing", function(){$(this).remove()});
     }
 }
