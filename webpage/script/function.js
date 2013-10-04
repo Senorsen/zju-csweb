@@ -3,8 +3,8 @@
 
 function c_cntr()
 {
-    this.model = new cmodel();
     this.view = new tot_view();
+    this.model = new cmodel(this.view);
     //this.view_init();
 }
 c_cntr.prototype = {

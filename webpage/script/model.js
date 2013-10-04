@@ -13,14 +13,13 @@ var url_list = {
     xxxx: ""
 };
 
-function cmodel()
+function cmodel(vw)
 {
     jQuery.ajaxSetup({
         async: false,       //弱菜太弱所以很无奈
         error: function() {
-            alert("发送数据请求出错。请检查网络连接是否良好");
-        },
-        contentType: "application/x-www-form-urlencoded; charset=GB2312",
+            vw.myAlert("发送网络请求失败。");
+        }
     });
     this.r = {
         index: {
@@ -143,7 +142,7 @@ cmodel.prototype = {
         if (typeof data == 'undefined') data = '';
         var f_obj = this.r[location];
         var retstr = '';
-        if (!$.browser.mozilla)
+        if (1 || !$.browser.mozilla)
         {
             if (f_obj._method == 'GET')
             {
