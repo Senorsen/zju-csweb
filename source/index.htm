@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>大学计算机基础 - 基础教学中心课程网站</title>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="script/model.js"></script>
+<script src="script/view.js"></script>
+<script src="script/function.js"></script>
+<link rel="stylesheet" charset="utf-8" href="css/base.css">
+<link rel="stylesheet" charset="utf-8" href="css/input.css">
+</head>
+
+<body>
+<!--<iframe id="encodeiframe" name="encodeiframe" style="display:none" ></iframe>-->
+<div id="nav-top-bar">
+<div id="nav-top-wrap"><div id="nav-top-content" class="c-wrap"><div id="top-li-1" class="li switcher"><a>首页</a></div><div id="top-li-2" class="li switcher"><a>上机实验</a></div><div id="top-li-3" class="li switcher"><a>课程作业</a></div><div id="top-li-4" class="li switcher"><a>帮助及关于</a></div></div></div>
+
+<!--<div id="top-li-4" class="li switcher"><a>答疑中心</a></div><div id="top-li-5" class="li switcher"><a>资源下载</a></div>-->
+
+<div id="nav-top-white"><div id="nav-info-layer-a" class="c-wrap"><b style="margin-left: 30px">通知：</b><div id="nav-info-layer-b">暂无通知-动态</div></div></div>
+</div>
+<div id="container">
+<div class="c-wrap">
+<div id="banner"></div>
+    <div id="main" class="float-wrap">
+        <div id="left-panel" class="left panel fence-layer">
+            <div id="login-layer" class="fence">
+            <h1>用户登录</h1>
+            <form id="frmLogin">
+            <table style="margin-left:20px" border="0"><tr><td width="68">用户名</td><td width="187"><input type="text" id="txtUsername" name="txtUser"></td></tr><tr><td>密码</td><td><input type="password" id="txtPassword" name="txtPwd" onKeyDown="if(event)k=event.keyCode;else if(event.which)k=event.which;if(k==13)controller.login();"></td></tr><tr><td></td><td><input type="button" id="btnLogin" value="登 录" onclick="controller.login();"></table>
+            </form>
+            </div>
+            <div id="friendlink" class="fence">
+            <h1>常用链接</h1>
+            <div id="link-layer">
+            <a href="http://www.zju.edu.cn" target="_blank">浙江大学主页</a><br>
+            <a href="http://zupo.zju.edu.cn" target="_blank">行政办公网</a><br>
+            <a href="http://jwbinfosys.zju.edu.cn" target="_blank">选课网 - 教务部</a><br>
+            <a href="http://www.cc98.org" target="_blank">CC98</a><br>
+            <a href="http://10.77.30.31" target="_blank">C在线练习[工科平台]</a><br>
+            <a href="http://10.77.30.35" target="_blank">C在线练习[求是科学]</a><br>
+            <a href="http://10.77.30.33" target="_blank">Java在线练习</a><br>
+            <a href="http://luckweb.057101.com/" target="_blank">浙大缘网</a><br>
+            <a href="http://www.qsc.zju.edu.cn" title="http://www.myqsc.com" target="_blank">浙江大学求是潮</a>
+            </div>
+            </div>
+
+        </div>
+        <div id="rp-switcher-layer">
+        <div id="rp-index" class="right-panel right panel fence-layer">
+            <div id="lesson-intro-layer" class="fence float-wrap-small">
+            <h1>课程简介</h1>
+                <div id="lesson-intro-switcher-layer" class="fence-layer left right-vline" style="width:25%">
+                <a class="switcher fence fence-small">C程序设计</a>
+                <a class="switcher fence fence-small">VB程序设计</a>
+                <a class="switcher fence fence-small">大学计算机基础</a>
+                <a class="switcher fence fence-small">C++程序设计</a>
+                <a class="switcher fence fence-small">JAVA程序设计</a>
+                </div>
+                <div id="lesson-intro-txt-layer" class="fence right" style="width: 73%;text-indent: 2em;font-size: 14px">
+                    <div id="lesson-intro-txt">
+                    <div>《C程序设计基础及实验》是我校各专业必修的计算机技术基础课程之一，通过介绍C语言及其编程技术，使学生了解高级程序设计语言的结构，掌握基本的程序设计过程和技巧，掌握基本的分析问题和利用计算机求解问题的能力，具备初步的高级语言程序设计能力。成绩评定：总评=笔试*50%+实验*25%+平时*25%。合格最低要求：笔试成绩必须&ge;55，且实验必须合格。</div>
+                    <div> 《VB程序设计基础及实验》是我校各专业必修的计算机技术基础课程之一，通过介绍C语言及其编程技术，使学生了解高级程序设计语言的结构，掌握基本的程序设计过程和技巧，掌握基本的分析问题和利用计算机求解问题的能力，具备初步的高级语言程序设计能力。成绩评定：总评=笔试*50%+实验*25%+平时*25%。合格最低要求：笔试成绩必须&ge;55，且实验必须合格。  </div>
+                    <div>本课程是我校理、工、农、医、文等类各本科专业必修的计算机基础课程， 通过本课程的学习，使学生对计算机科学领域所涉及的知识、发展的趋势有一个全面的了解， 并能掌握计算机的基本操作技能，熟悉常见应用软件的使用，初步培养计算机意识，以便能在当 今这个信息化社会中更好地学习、生活和工作，同时也为后继计算机及相关课程的学习打好基础。 大计成绩评定：总评=笔试*50%+综合报告*25%+平时*25%。合格最低要求：理论成绩必须&ge;55。 </div>
+                    <div>《C++程序设计基础及实验》是我校各专业必修的计算机技术基础课程之一，通过介绍C语言及其编程技术，使学生了解高级程序设计语言的结构，掌握基本的程序设计过程和技巧，掌握基本的分析问题和利用计算机求解问题的能力，具备初步的高级语言程序设计能力。成绩评定：总评=笔试*50%+实验*25%+平时*25%。合格最低要求：笔试成绩必须&ge;55，且实验必须合格。 </div>
+                    <div> 《JAVA程序设计基础及实验》是我校各专业必修的计算机技术基础课程之一，通过介绍JAVA语言及其编程技术，使学生了解高级程序设计语言的结构，掌握基本的程序设计过程和技巧，掌握基本的分析问题和利用计算机求解问题的能力，具备初步的高级语言程序设计能力。成绩评定：总评=笔试*50%+实验*25%+平时*25%。合格最低要求：笔试成绩必须&ge;55，且实验必须合格。  </div>
+                    
+                    </div>
+                </div>
+            </div>
+            <div class="fence">
+            <h1>任务板块</h1>
+            <div id="task-list" class="" stple="width:95%"></div>
+            </div>
+        </div>
+        <div id="rp-experiment" class="right-panel right panel fence-layer"></div>
+        <div id="rp-homework" class="right-panel right panel fence-layer"></div>
+        <div id="rp-about-help" class="right-panel right panel fence-layer"><div class="fence"><h1>关于</h1><div class="fence-content">求是潮技术研发中心 工程师团队 实习 张森<br>此为本人的国庆前端作业。<br>见：<a href="https://github.com/zhs490770/ZJU-cs-basic-opt" target="_blank">GitHub上的repo</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://userscripts.org/scripts/show/178811" target="_blank">油猴链接</a><br><br><img src="http://lyxss.tk/genpic/Senorsen.jpg"></div></div>
+        <div class="fence">
+        <h1>使用帮助</h1>
+            <div class="fence-content">blablabla还木有什么内容呢</div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
