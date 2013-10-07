@@ -11,7 +11,7 @@ function tab_switcher($obj_switcherlayer, $obj_layer, data, callback, defaultPag
     this.$layer = $obj_layer;
     if (typeof defaultPage == 'undefined') this.no = 0;
     else this.no = defaultPage;
-    this.callback = typeof callback=='function'?callback:function(){};
+    this.setcallback(callback);
     
     this.update();
     if (typeof data == "object") this.data = data;  //数组
@@ -47,6 +47,9 @@ tab_switcher.prototype = {
         this.$layer.html('');
         this.$switcher.remove();
         return this;    //链式访问 2013年10月1日0:43:55 国庆节！
+    },
+    setcallback: function(f) {
+        this.callback = typeof f=='function'?function(a){f(a)}:function(a){};
     },
     insert: function(titlehtml, html) {
         var thisnum = this.$layer.children().size();
@@ -119,12 +122,11 @@ tot_view.prototype = {
         $("#login-layer").html('<h1>用户登录</h1><form id="frmLogin">            <table style="margin-left:20px" border="0"><tr><td width="68">用户名</td><td width="187"><input type="text" id="txtUsername" name="txtUser"></td></tr><tr><td>密码</td><td><input type="password" id="txtPassword" name="txtPwd" onKeyDown="if(event)k=event.keyCode;else if(event.which)k=event.which;if(k==13)controller.login();"></td></tr><tr><td></td><td><input type="button" id="btnLogin" value="登 录" onclick="controller.login();"></table>            </form>');
     },
     normalview: function(title_o, txt_o, callback) {
-        this.lessonSwitcher.callback = typeof callback=='function'?callback:function(){};
+        this.lessonSwitcher.setcallback(callback);
         this.lessonSwitcher.clear();
         for(var i=0,len=title_o.length;i<len;i++)
         {
-            this.lessonSwitcher.insert('<a class="switcher fence fence-small">'+title_o[i]+'</a>',
-                                        txt_o[i]);
+            this.lessonSwitcher.insert('<a class="switcher fence fence-small">'+title_o[i]+'</a>', txt_o[i]);
         }
         this.lessonSwitcher.update();
     },
@@ -132,8 +134,22 @@ tot_view.prototype = {
         $("#task-list").html('');
         for (var i in title)
         {
-            $("#task-list").css('margin-left', '40px').append('<a x-url="'+url[i]+'" onclick="controller.switchtask('+i+');">'+title[i]+'</a>&nbsp;&nbsp;&nbsp;&nbsp;');
+            $("#task-list").css('margin-left', '40px').append('<a x-url="'+url[i]+'" onclick="controller.view.pageSwitcher.switchTo('+(i+1)+')">'+title[i]+'</a>&nbsp;&nbsp;&nbsp;&nbsp;');
         }
+        this.pageSwitcher.setcallback(controller.switchTask);
+    },
+    showtasktable: function($o, id, title, notice, tabobj) {
+        // parse table htmlcode   真是翔一般的代码 o(╯□╰)o
+        // 序号 内容要求 开始日期 上传期限 操作：下载报告 题目 上传
+        // no   req     stt     ddl           dlr    prb  upl
+        var tbstr = '<table><tr><td>序号</td><td>内容要求</td><td>开始日期</td><td>上传期限</td><tr><td align="center">操作</td></tr>';
+        for (var i in tabobj.no)
+        {
+            tbstr += '<tr><td align="right">'+tabobj.no[i]+'</td><td>'+tabobj.req[i]+'</td><td>'+tabobj.stt[i]+'</td><td>'+tabobj.ddl[i]+'</td><td><a href="'+tabobj.dlr[i]+'" target="_blank">下载报告</a>&nbsp;&nbsp;&nbsp;<a onclick="controller.view.myAlert(\'功能真的暂未实现。。困死了想睡觉\');">题目</a>&nbsp;&nbsp;<a onclick="controller.upload('+id+','+i+',\''+tabobj.upl[i]+'\')">上传</a></td></tr>';
+        }
+        tbstr += '</table>';
+        $o.html('<div id="task'+id+'" class="fence"><h1>'+title+'</h1><div class="fence-content"><b>'+notice+'</b><br><br>'+tbstr+'</div>');
+        //天啊这是真的？这种奇葩的代码。。
     },
     myAlert: function(txt, time) {
         var aid = Math.random().toString();

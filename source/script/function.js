@@ -14,7 +14,6 @@ c_cntr.prototype = {
         this.model.fetch("login", data, function(a){t._login(a)});
     },
     _login: function(ret) {
-        console.debug(ret);
         if (ret.login_succ)
         {
             //登录成功，反馈view
@@ -23,6 +22,10 @@ c_cntr.prototype = {
                 t.user_o = a;
                 t.view.loginview(t.user_o.user_info, 1);
                 t.view.normalview(a.lesson_title, a.lesson_info, function(b){$("#nav-info-layer-b").html(a.lesson_title[b]+'：'+a.lesson_announce[b])});
+                for (var i in a.task_obj)
+                {
+                    url_list['task'+i] = a.task_obj[i];
+                }
                 t.view.showtask(a.task_title, a.task_obj);
             });
         } else {
@@ -31,9 +34,13 @@ c_cntr.prototype = {
         }
     },
     logout: function() {
-        $.get("login/logout.asp");
+        this.model.fetch('logout');
         this.view.loginshow();
-    }
+    },
+    switchTask: function(id) {
+        var ids = ['rp-experiment', 'rp-homework', 'rp-file', 'rp-document'];
+        
+    },
 }
 
 $(document).ready(function() {

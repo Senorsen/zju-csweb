@@ -6,77 +6,133 @@ var url_list = {
     index: "index.asp",
     login: "login/check.asp",
     login_succ: "index_student.asp",
-    kcjg: "",
-    kczl: "",
-    kczy: "",
-    sjsy: "",
-    xxxx: ""
+    logout: "login/logout.asp",
 };
-
+var url_handler = {
+    index: {
+        lesson_announce: ["function", function($o) {
+            $ob = $o.find('span[style="font-weight: 400"]');
+            var ret = [];
+            for (var i=0;i<$ob.length;i++)
+                ret.push($ob.eq(i).html());
+            return ret;
+        }],
+        _method: "GET"
+    },
+    login: {
+        login_fail: ["reg", /alert\('(.+?)'\)/, 1],             //注释一发：reg为regexp的缩写，正则表达式；function为函数，参数为parse的jQuery对象。
+        login_succ: ["reg", /index_student[.]asp/, 0],
+        _method: "POST"
+    },
+    login_succ: {
+        user_info: ["reg", /<TD  align=left>(.+?)<\/TD>/, 1],
+        lesson_info: ["function", function($o) {
+            $ob = $o.find('span[style="font-weight: 400"]');
+            var ret = [];
+            for (var i=0;i<$ob.length;i++)
+                ret.push($ob.eq(i).html());
+            return ret;
+        }],
+        lesson_announce: ["function", function($o) {
+            $ob = $o.find('td > marquee');
+            var ret = [];
+            for (var i=0;i<$ob.length;i++)
+                ret.push($ob.eq(i).html());
+            return ret;
+        }],
+        lesson_title: ["function", function($o) {
+            $ob = $o.find('td[valign=middle] > b');
+            var ret = [];
+            for (var i=0;i<$ob.length;i++)
+                ret.push($ob.eq(i).html());
+            return ret;
+        }],
+        task_title: ["function", function() {
+            return ['上机实验', '课程作业', '课程资料', '课程讲稿'];
+        }],
+        task_obj: ["function", function($o) {
+            var retobj = [], turl = [];
+            $o.find("a").each(function() {
+                if (this.innerHTML == '上机实验') 
+                turl[0] = this.href.replace(/&amp;/g, '&');
+                if (this.innerHTML == '课程作业') 
+                turl[1] = this.href.replace(/&amp;/g, '&');
+                if (this.innerHTML == '课程资料') 
+                turl[2] = this.href.replace(/&amp;/g, '&');
+                if (this.innerHTML == '课程讲稿') 
+                turl[3] = this.href.replace(/&amp;/g, '&');
+            });
+            for (var i in turl)
+            {
+                var pagename = '';
+                switch(parseInt(i))
+                {
+                    case 0:
+                        pagename = 'jobexam/ExamList.asp';break;
+                    case 1:
+                        pagename = 'jobexam/ExamList.asp';break;
+                    case 2:
+                        pagename = 'courceinfo/jianggao.asp';break;
+                    case 3:
+                        pagename = 'courceinfo/resource.asp';break;
+                    default:
+                        break;
+                }
+                retobj[i] = pagename+'?flag=0&'+$.param(getArgs(turl[i].match(/[^?]+$/)[0]));
+            }
+            return retobj;
+            /**************************
+                 以下func: getArgs 源自 -> 
+             http://www.jsann.com/post/JS_GET_parameters_to_obtain.html
+            **************************/
+            function getArgs(url){
+                var args = {};
+                var match = null;
+                var search = url;
+                var reg = /(?:([^&amp;]+)=([^&amp;]+))/g;
+                while((match = reg.exec(search))!==null){
+                    args[match[1]] = match[2];
+                }
+                return args;
+            }
+        }],
+        _method: "GET"
+    },
+    logout: {
+        _method: "GET"
+    },
+    task0: {
+        notification: ["function", function($o) {
+            return $o.find("font").eq(0).parent().text();
+        }],
+        data: ["function", function($o) {
+            var no = [], req = [], stt = [], ddl = [], dlr = [], prb = [], upl = [];
+            $trs = $o.find('tr[bordercolor="#e9f0f4"][bgcolor="#f8f3fb"]');
+            $trs.each(function() {
+                $c = $(this).children();
+                no.push($c.eq(0).html());
+                req.push($c.eq(1).html());
+                stt.push($c.eq(2).html());
+                ddl.push($c.eq(3).html());
+                dlr.push(th($c.eq(4).children('a').attr('href')));
+                prb.push($c.eq(5).children('a').attr('href'));
+                upl.push($c.eq(6).children('a').attr('href'));
+            });
+            function th(u){
+                return '../'+/teacherdata.+$/.exec(u)[0]}
+            return {no:no,req:req,stt:stt,ddl:ddl,dlr:dlr,prb:prb,upl:upl};
+        }],
+        _method: "GET"
+    }
+};
 function cmodel(vw)
 {
     jQuery.ajaxSetup({
-        async: false,       //弱菜太弱所以很无奈
+        async: true,
         error: function() {
             vw.myAlert("发送网络请求失败。");
         }
     });
-    this.r = {
-        index: {
-            lesson_announce: ["function", function($o) {
-                $ob = $o.find('span[style="font-weight: 400"]');
-                var ret = [];
-                for (var i=0;i<$ob.length;i++)
-                    ret.push($ob.eq(i).html());
-                return ret;
-            }],
-            _method: "GET"
-        },
-        login: {
-            login_fail: ["reg", /alert\('(.+?)'\)/, 1],             //注释一发：reg为regexp的缩写，正则表达式；function为函数。
-            login_succ: ["reg", /index_student[.]asp/, 0],
-            _method: "POST"
-        },
-        login_succ: {
-            user_info: ["reg", /<TD  align=left>(.+?)<\/TD>/, 1],
-            lesson_info: ["function", function($o) {
-                $ob = $o.find('span[style="font-weight: 400"]');
-                var ret = [];
-                for (var i=0;i<$ob.length;i++)
-                    ret.push($ob.eq(i).html());
-                return ret;
-            }],
-            lesson_announce: ["function", function($o) {
-                $ob = $o.find('td > marquee');
-                var ret = [];
-                for (var i=0;i<$ob.length;i++)
-                    ret.push($ob.eq(i).html());
-                return ret;
-            }],
-            lesson_title: ["function", function($o) {
-                $ob = $o.find('td[valign=middle] > b');
-                var ret = [];
-                for (var i=0;i<$ob.length;i++)
-                    ret.push($ob.eq(i).html());
-                return ret;
-            }],
-            task_title: ["function", function() {
-                return ['上机实验', '课程作业'];
-            }],
-            task_obj: ["function", function($o) {
-                var retobj = [];
-                $o.find("a").each(function() {
-                    if (this.innerHTML == '上机实验') 
-                    retobj[0] = this.href.replace(/&amp;/g, '&');
-                    if (this.innerHTML == '课程作业') 
-                    retobj[1] = this.href.replace(/&amp;/g, '&');
-                });
-                return retobj;
-            }],
-            _method: "GET"
-        },
-        
-    };
     try {
         this.tn = location.href.match(/tt=(\w+)[&]/)[1];
         this.linksuffix = '?tt='+this.tn+'&tn='+this.tn;
@@ -95,8 +151,8 @@ function cmodel(vw)
     }
 }
 cmodel.prototype = {
-    _ffajax: function(url, data, method, callback) {      //通过iframe来模拟ajax。蛋疼的小森森的无奈之举！。 2013年9月30日3:43:59
-        var frmAjax = document.createElement('form');
+    _ffajax: function(url, data, method, callback) {        //通过iframe来模拟ajax，firfox。蛋疼的小森森的无奈之举！。 2013年9月30日3:43:59
+        var frmAjax = document.createElement('form');       //只可惜仍然不太好。
         frmAjax.target='encodeiframe';
         if (typeof data == 'string')    // 2013年9月30日4:41:38
         {
@@ -140,29 +196,29 @@ cmodel.prototype = {
     },
     fetch: function(location, data, callback) {
         if (typeof data == 'undefined') data = '';
-        var f_obj = this.r[location];
+        var f_obj = url_handler[location];
         var retstr = '';
+        fetch_callback_1 = this._fetch_cb;
+        if (typeof callback == 'undefined') callback = function() {};
         if (1 || !$.browser.mozilla)
         {
             if (f_obj._method == 'GET')
             {
-                $.get(url_list[location], this.linksuffix+'&'+data, function(data){retstr=data;}, "html");
+                $.get(url_list[location], this.linksuffix+'&'+data, function(data){retstr=data;callback(fetch_callback_1(retstr, f_obj));}, "html");
             }
             else if(f_obj._method == 'POST')
             {
-                $.post(url_list[location]+this.linksuffix, data, function(data){retstr=data;}, "html");
+                $.post(url_list[location]+this.linksuffix, data, function(data){retstr=data;callback(fetch_callback_1(retstr, f_obj));}, "html");
             }
         }
         else
         {
-            this._ffajax(url_list[location]+this.linksuffix, data, f_obj._method, function(data){retstr=data});
+            this._ffajax(url_list[location]+this.linksuffix, data, f_obj._method, function(data){retstr=data;callback(fetch_callback_1(retstr, f_obj));});
         }
-        callback(this._fetch_cb(retstr, f_obj));
-        
     },
     _fetch_cb: function(retstr, f_obj) {
         var retobj = {};
-        $o = $(retstr);
+        var $o = $(retstr);
         for (e in f_obj)
         {
             if (e != '_method')
