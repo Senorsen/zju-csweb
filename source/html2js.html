@@ -18,12 +18,17 @@ function go()
     return result;
     function html2js(container, html)
     {
-        //return container+"=\""+a2s(html.replace(/\\/g,"\\\\").replace(/\'/g,"\\\'").replace(/\"/g,"\\\"").split("\n"))+"\";";
         return container+"=unescape(\""+escape(html).replace(/\\/g,"\\\\").replace(/\'/g,"\\\'").replace(/\"/g,"\\\"")+"\");";
         function a2s(a)
         {
             var r='';
-            for(var b in a)if(typeof a[b]!='undefiend')r+=a[b];
+            for (var b in a)
+            {
+                if (typeof a[b] != 'undefined')
+                {
+                    r += a[b];
+                }
+            }
             return r;
         }
     }

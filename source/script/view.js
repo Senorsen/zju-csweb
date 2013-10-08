@@ -1,8 +1,6 @@
 // ZJU-cs-basic-opt
 // view.js - 视觉效果，显示组件等
 
-
-
 /* Tab Switcher */
 function tab_switcher($obj_switcherlayer, $obj_layer, data, callback, defaultPage)
 {
@@ -14,7 +12,6 @@ function tab_switcher($obj_switcherlayer, $obj_layer, data, callback, defaultPag
     if (typeof callback == 'function') this.setcallback(callback);
     else if (typeof callback == 'object') this.setcallback(callback.func, callback.applyTo);
     else this.setcallback(function() {})
-    
     this.update();
     if (typeof data == "object") this.data = data;  //数组
     else if (typeof data == "string" || typeof data == "undefined")

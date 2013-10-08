@@ -6,7 +6,7 @@ var url_list = {
     index: "index.asp",
     login: "login/check.asp",
     login_succ: "index_student.asp",
-    logout: "login/logout.asp",
+    logout: "login/logout.asp"
 };
 var url_handler = {
     index: {
@@ -181,7 +181,7 @@ var url_handler = {
             return [nod,chn,cht,chd,opr];
         }],
         _method: "GET"
-    },
+    }
 };
 function cmodel(vw)
 {
