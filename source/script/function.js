@@ -6,8 +6,20 @@ function c_cntr()
     this.view = new tot_view();
     this.model = new cmodel(this.view);
     //this.view_init();
+    this.inittest();
 }
 c_cntr.prototype = {
+    inittest: function() {
+        if(/uid=\d+;/.test(document.cookie))
+        {
+            console.debug('登录状态可能有效');
+            this._login({login_succ:1});
+        }
+        else
+        {
+            console.debug('无登录状态');
+        }
+    },
     login: function() {
         var data = $("#frmLogin").serialize();
         t = this;
@@ -21,12 +33,20 @@ c_cntr.prototype = {
             this.model.fetch("login_succ", '', function(a) {
                 t.user_o = a;
                 t.view.loginview(t.user_o.user_info, 1);
-                t.view.normalview(a.lesson_title, a.lesson_info, function(b){$("#nav-info-layer-b").html(a.lesson_title[b]+'：'+a.lesson_announce[b])});
+                t.view.normalview(a.lesson_title, a.lesson_info, function(b){$("#nav-info-layer-b").html(a.lesson_title[b]+'：'+a.lesson_announce[b])}, t);
                 for (var i in a.task_obj)
                 {
                     url_list['task'+i] = a.task_obj[i];
                 }
                 t.view.showtask(a.task_title, a.task_obj);
+                t.view.pageSwitcher.setcallback(
+                    function(id0) {
+                        id0 = parseInt(id0);
+                        if (id0 >= 1 && id0 <= 4)
+                        {
+                            this.switchTask(id0 - 1);
+                        }
+                    }, t);
             });
         } else {
             //登录失败，同样要反馈view
@@ -39,7 +59,10 @@ c_cntr.prototype = {
     },
     switchTask: function(id) {
         var ids = ['rp-experiment', 'rp-homework', 'rp-file', 'rp-document'];
-        
+        var t = this;
+        t.model.fetch('task'+id, '', function(obj) {
+            t.view.showtasktable($('#'+ids[id]), id, t.user_o.task_title[id], obj.notification, obj.data);
+        });
     },
 }
 
