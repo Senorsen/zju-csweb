@@ -55,6 +55,7 @@ c_cntr.prototype = {
     },
     logout: function() {
         this.model.fetch('logout');
+        this.model.clearCookies();
         this.view.loginshow();
     },
     switchTask: function(id) {
