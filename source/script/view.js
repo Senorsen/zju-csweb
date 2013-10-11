@@ -11,7 +11,7 @@ function tab_switcher($obj_switcherlayer, $obj_layer, data, callback, defaultPag
     else this.no = defaultPage;
     if (typeof callback == 'function') this.setcallback(callback);
     else if (typeof callback == 'object') this.setcallback(callback.func, callback.applyTo);
-    else this.setcallback(function() {})
+    else this.setcallback(function() {});
     this.update();
     if (typeof data == "object") this.data = data;  //数组
     else if (typeof data == "string" || typeof data == "undefined")
@@ -96,7 +96,7 @@ tab_switcher.prototype = {
         this.$switcher.removeAttr("x-switcher-no").removeClass("selected").unbind("click");
         this.$layer.children().removeAttr("x-switchlayer-displaymode").html("");
     }
-}
+};
 
 
 ////////////////////////////////////

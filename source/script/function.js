@@ -65,7 +65,7 @@ c_cntr.prototype = {
             t.view.showtasktable($('#'+ids[id]), id, t.user_o.task_title[id], obj.notification, obj.data);
         });
     }
-}
+};
 
 $(document).ready(function() {
 	init();
