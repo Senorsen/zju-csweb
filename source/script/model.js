@@ -37,7 +37,7 @@ var url_handler = {
             $ob = $o.find('td > marquee');
             var ret = [];
             for (var i=0;i<$ob.length;i++)
-                ret.push($ob.eq(i).html());
+                ret.push($ob.eq(i).html().replace(/<br \/>/g, '').replace(/<br>/g, ''));
             return ret;
         }],
         lesson_title: ["function", function($o) {
@@ -111,16 +111,20 @@ var url_handler = {
             if ($trs.length == 1 && $trs.children().length == 0) {
                 // nothing to do.
             } else {
-                $trs.each(function() {
-                    $c = $(this).children();
-                    no.push($c.eq(0).html());
-                    req.push($c.eq(1).html());
-                    stt.push($c.eq(2).html());
-                    ddl.push($c.eq(3).html());
-                    dlr.push(th($c.eq(4).children('a').attr('href')));
-                    prb.push($c.eq(5).children('a').attr('href'));
-                    upl.push($c.eq(6).children('a').attr('href'));
-                });
+                try {
+                    $trs.each(function() {
+                        $c = $(this).children();
+                        no.push($c.eq(0).html());
+                        req.push($c.eq(1).html());
+                        stt.push($c.eq(2).html());
+                        ddl.push($c.eq(3).html());
+                        dlr.push(th($c.eq(4).children('a').attr('href')));
+                        prb.push($c.eq(5).children('a').attr('href'));
+                        upl.push($c.eq(6).children('a').attr('href'));
+                    });
+                } catch(e) {
+                    // what to do?
+                }
             }
             function th(u){return '../'+/teacher\.data.+$/.exec(u)[0]}
             return {no:no,req:req,stt:stt,ddl:ddl,dlr:dlr,prb:prb,upl:upl};
@@ -137,16 +141,20 @@ var url_handler = {
             if ($trs.length == 1 && $trs.children().length == 0) {
                 // nothing to do.
             } else {
-                $trs.each(function() {
-                    $c = $(this).children();
-                    no.push($c.eq(0).html());
-                    req.push($c.eq(1).html());
-                    stt.push($c.eq(2).html());
-                    ddl.push($c.eq(3).html());
-                    dlr.push(th($c.eq(4).children('a').attr('href')));
-                    prb.push($c.eq(5).children('a').attr('href'));
-                    upl.push($c.eq(6).children('a').attr('href'));
-                });
+                try {
+                    $trs.each(function() {
+                        $c = $(this).children();
+                        no.push($c.eq(0).html());
+                        req.push($c.eq(1).html());
+                        stt.push($c.eq(2).html());
+                        ddl.push($c.eq(3).html());
+                        dlr.push(th($c.eq(4).children('a').attr('href')));
+                        prb.push($c.eq(5).children('a').attr('href'));
+                        upl.push($c.eq(6).children('a').attr('href'));
+                    });
+                } catch(e) {
+                    // what to do?
+                }
             }
             function th(u){return '../'+/teacher\.data.+$/.exec(u)[0]}
             return {no:no,req:req,stt:stt,ddl:ddl,dlr:dlr,prb:prb,upl:upl};
@@ -161,15 +169,19 @@ var url_handler = {
             if ($trs.length == 1 && $trs.children().length == 0) {
                 // nothing to do.
             } else {
-                $trs.each(function() {
-                    $c = $(this).children();
-                    nod.push($c.eq(0).html());
-                    res.push($c.eq(1).html());
-                    sbj.push($c.eq(2).html());
-                    des.push($c.eq(3).html());
-                    tim.push($c.eq(4).html());
-                    opr.push(th($c.eq(5).children('a').attr('href')));
-                });
+                try {
+                    $trs.each(function() {
+                        $c = $(this).children();
+                        nod.push($c.eq(0).html());
+                        res.push($c.eq(1).html());
+                        sbj.push($c.eq(2).html());
+                        des.push($c.eq(3).html());
+                        tim.push($c.eq(4).html());
+                        opr.push(th($c.eq(5).children('a').attr('href')));
+                    });
+                } catch(e) {
+                    // what to do?
+                }
             }
             function th(u){return '../'+/teacher\.data.+$/.exec(u)[0]}
             return [nod,res,sbj,des,tim,opr];
@@ -184,14 +196,18 @@ var url_handler = {
             if ($trs.length == 1 && $trs.children().length == 0) {
                 // nothing to do.
             } else {
-                $trs.each(function() {
-                    $c = $(this).children();
-                    nod.push($c.eq(0).html());
-                    chn.push($c.eq(1).html());
-                    cht.push($c.eq(2).html());
-                    chd.push($c.eq(3).html());
-                    opr.push(th($c.eq(4).children('a').attr('href')));
-                });
+                try {
+                    $trs.each(function() {
+                        $c = $(this).children();
+                        nod.push($c.eq(0).html());
+                        chn.push($c.eq(1).html());
+                        cht.push($c.eq(2).html());
+                        chd.push($c.eq(3).html());
+                        opr.push(th($c.eq(4).children('a').attr('href')));
+                    });
+                } catch(e) {
+                    // what to do?
+                }
             }
             function th(u){return '../'+/teacher\.data.+$/.exec(u)[0]}
             return [nod,chn,cht,chd,opr];
