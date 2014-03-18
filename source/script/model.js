@@ -118,7 +118,7 @@ var url_handler = {
                 prb.push($c.eq(5).children('a').attr('href'));
                 upl.push($c.eq(6).children('a').attr('href'));
             });
-            function th(u){return '../'+/teacherdata.+$/.exec(u)[0]}
+            function th(u){return '../'+/teacher\.data.+$/.exec(u)[0]}
             return {no:no,req:req,stt:stt,ddl:ddl,dlr:dlr,prb:prb,upl:upl};
         }],
         _method: "GET"
