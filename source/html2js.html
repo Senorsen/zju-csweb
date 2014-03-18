@@ -3,18 +3,30 @@
 <head>
 <meta charset="utf-8">
 <title>uso;去除js</title>
+<script src="script/jquery.js"></script>
 <script language="javascript">
-// convert html code to js code. by Senorsen
+// convert html code to js code (for zju-csweb only!). by Senorsen
 // 2013/9/29
 function go()
 {
     var urlprefix = document.getElementById('baseurl').value;
     var oldcode = document.getElementById('code').value;
+    var newscript = [], newscript_str = '';
+    // 假设此处都是本地脚本（实际上编写时保证就可以了）
+    var scripts_match = [];
+    var preg = /<script src="(.+)"><\/script>/g;
+    while ((scripts_match = preg.exec(oldcode)) != null) {
+        newscript.push(scripts_match[1]);
+        newscript_str += "'"+urlprefix+scripts_match[1]+"',";
+    }
     oldcode = oldcode.replace(/<script(.+?)<\/script>/g, '');
     oldcode = oldcode.replace(/href="([^h][^"]*|.[^t][^"]*|..[^t][^"]+|...[^p][^"]+)/g, 'href=\"'+urlprefix+'$1');
     var txthead = /<head>([\s\S]+?)<\/head>/.exec(oldcode)[1];
     var txtbody = /<body>([\s\S]+?)<\/body>/.exec(oldcode)[1];
     var result = html2js("document.head.innerHTML", txthead) + html2js("document.body.innerHTML", txtbody);
+    result = "function logme(txt){try{console.debug(txt);}catch(e){}}\nlogme('Starting to output html...');\n"+result+"logme('Finished.');\n\n/** LazyLoad https://github.com/rgrove/lazyload **/\n"+window.lazyload_js+"var js_path=["+newscript_str+"];"+"LazyLoad.js(js_path, function() {if(0)if(init)init()},{'charset': 'utf-8'});";
+    //我自己都觉得这里不太优雅，不过没关系，若干年后应该仍能记得
+    //这是干嘛的。
     return result;
     function html2js(container, html)
     {
@@ -33,11 +45,14 @@ function go()
         }
     }
 }
+var lazyload_js = '';
+$.get('script/lazyload.js', null, function(data){window.lazyload_js = data;}, 'text');
+$.get('index.html', null, function(data){$('#code').val(data);}, 'text');
 </script>
 </head>
 
 <body>
-<textarea id="baseurl" cols="40" rows="1">http://lyxss.tk/djj/</textarea><br>
+<textarea id="baseurl" cols="40" rows="1">http://project.qsc.senorsen.com/csweb/</textarea><br>
 <textarea id="code" cols="100" rows="30"></textarea>
 <button onclick="document.getElementById('code').value=go();">开始转换！</button>
 </body>
