@@ -140,7 +140,7 @@ var url_handler = {
                 prb.push($c.eq(5).children('a').attr('href'));
                 upl.push($c.eq(6).children('a').attr('href'));
             });
-            function th(u){return '../'+/teacherdata.+$/.exec(u)[0]}
+            function th(u){return '../'+/teacher\.data.+$/.exec(u)[0]}
             return {no:no,req:req,stt:stt,ddl:ddl,dlr:dlr,prb:prb,upl:upl};
         }],
         _method: "GET"
@@ -159,7 +159,7 @@ var url_handler = {
                 tim.push($c.eq(4).html());
                 opr.push(th($c.eq(5).children('a').attr('href')));
             });
-            function th(u){return '../'+/teacherdata.+$/.exec(u)[0]}
+            function th(u){return '../'+/teacher\.data.+$/.exec(u)[0]}
             return [nod,res,sbj,des,tim,opr];
         }],
         _method: "GET"
@@ -177,7 +177,7 @@ var url_handler = {
                 chd.push($c.eq(3).html());
                 opr.push(th($c.eq(4).children('a').attr('href')));
             });
-            function th(u){return '../'+/teacherdata.+$/.exec(u)[0]}
+            function th(u){return '../'+/teacher\.data.+$/.exec(u)[0]}
             return [nod,chn,cht,chd,opr];
         }],
         _method: "GET"
