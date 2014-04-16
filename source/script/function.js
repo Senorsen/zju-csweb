@@ -73,10 +73,5 @@ $(document).ready(function() {
 
 function init()
 {
-    if (typeof jQuery == 'undefined' || typeof cmodel == 'undefined' || typeof tab_switcher == 'undefined')
-    {
-        setTimeout(init, 100);
-        return;
-    }
     controller = new c_cntr();
 }
