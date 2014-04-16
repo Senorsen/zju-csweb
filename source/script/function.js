@@ -3,12 +3,35 @@
 
 function c_cntr()
 {
-    this.view = new tot_view();
+    this.path = this.getpath();
+    this.page = this.getpage(this.path);
     this.model = new cmodel(this.view);
+    this.view = new tot_view(this.page);
     //this.view_init();
-    this.inittest();
+    if (this.page == 'main') {
+        this.inittest();
+    } else if (this.page == 'init') {
+        this.fixinit();
+    }
 }
 c_cntr.prototype = {
+    getpage: function(path) {
+        var preg_search = /^\/cstcx\/web\/index\.asp/;
+        if (preg_search.exec(path)) {
+            return 'main';
+        } else {
+            return 'init';
+        }
+    },
+    getpath: function() {
+        var href = location.href;
+        var preg = /^http:\/\/.+?(\/.*)/;
+        var ret = preg.exec(href);
+        if (typeof ret[1] == 'undefined') {
+            ret[1] = '/';
+        }
+        return ret[1];
+    },
     inittest: function() {
         if(/uid=\d+;/.test(document.cookie))
         {
@@ -19,6 +42,14 @@ c_cntr.prototype = {
         {
             console.debug('无登录状态');
         }
+    },
+    fixinit: function() {
+        this.model.fetch_proxy("teacher_list", function(data) {
+            document.charset = data.charset;
+            document.characterSet = data.charset;
+            document.title = data.title;
+            document.body.innerHTML = data.body;
+        });
     },
     login: function() {
         var data = $("#frmLogin").serialize();
@@ -73,5 +104,5 @@ $(document).ready(function() {
 
 function init()
 {
-    controller = new c_cntr();
+    window.controller = new c_cntr();
 }

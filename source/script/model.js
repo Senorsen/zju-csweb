@@ -8,6 +8,10 @@ var url_list = {
     login_succ: "index_student.asp",
     logout: "login/logout.asp"
 };
+var url_wrap = {
+    'zju_csweb': '/', // temporarily useless!! don't believe it.
+    'senorsen_proxy': 'http://project.qsc.senorsen.com/zju-csweb/server_proxy/'
+};
 var url_handler = {
     index: {
         lesson_announce: ["function", function($o) {
@@ -217,6 +221,7 @@ var url_handler = {
 };
 function cmodel(vw)
 {
+    this.vw = vw;
     jQuery.ajaxSetup({
         async: true,
         error: function() {
@@ -228,7 +233,7 @@ function cmodel(vw)
         this.linksuffix = '?tt='+this.tn+'&tn='+this.tn;
     }
     catch(e) {
-        console.error('错误：无法获知具体的链接参数');
+        //console.error('错误：无法获知具体的链接参数');
     }
     if ($.browser.mozilla)      //for firefox
     {
@@ -264,6 +269,27 @@ cmodel.prototype = {
         {
             var o2 = arr[i].split('=');
             document.cookie = o2[0] + '=' + '' + "; expires=Mon, 26 Jul 1997 05:00:00 GMT; path=/cstcx";
+        }
+    },
+    fetch_proxy: function(action, callback, data) {
+        var fetch_method = 'POST';
+        if (typeof data == 'undefined' || data == '' || data == {} || data == []) {
+            data = undefined;
+            fetch_method = 'GET';
+            console.log('Proxy GET: ' + action);
+        }
+        var _fpcb = function(data) {
+            if (data.code == 0) {
+                callback(data.obj, action);
+            } else {
+                this.vw.myAlert('向proxy请求时出错：' + data.msg);
+            }
+        };
+        if (fetch_method == 'GET') {
+            $.get(url_wrap.senorsen_proxy + '?type=jsonp&action=' + action, {}, _fpcb, "jsonp");
+        } else {
+            // 咋可能是post咧
+            callback({code: -1, msg: 'ERR_METHOD_NOT_SUPPORTED'}, action);
         }
     },
     fetch: function(location, data, callback) {

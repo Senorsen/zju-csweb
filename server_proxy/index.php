@@ -20,9 +20,15 @@ $action = para('action');
 if (in_array($action, $allowed_modules)) {
     include $action . ".php";
     if (isset($ret_data) && !is_null($ret_data)) {
+        if (is_array($ret_data)) {
+            $ret_data['charset'] = $output_charset;
+        } else if (is_object($ret_data)) {
+            $ret_data->charset = $output_charset;
+        }
         $ret_data = array(
             'code' => 0,
             'msg' => 'ERR_SUCCESS',
+            'charset' => $output_charset,
             'obj' => $ret_data
         );
     } else {

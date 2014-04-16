@@ -102,13 +102,20 @@ tab_switcher.prototype = {
 ////////////////////////////////////
 //     这是一个通用的视图类       //
 ////////////////////////////////////
-function tot_view()
+function tot_view(page)
 {
-    t = this;
-    this.pageSwitcher = new tab_switcher($("#nav-top-content"), $("#rp-switcher-layer"), "inner");
-    this.lessonSwitcher = new tab_switcher($("#lesson-intro-switcher-layer"), $("#lesson-intro-txt"), "inner");
+    if (page == 'main') {
+        this.init_main();
+    } else if (page == 'init') {
+        // wait for controller
+        // and do nothing here
+    }
 }
 tot_view.prototype = {
+    init_main: function() {
+        this.pageSwitcher = new tab_switcher($("#nav-top-content"), $("#rp-switcher-layer"), "inner");
+        this.lessonSwitcher = new tab_switcher($("#lesson-intro-switcher-layer"), $("#lesson-intro-txt"), "inner");
+    },
     loginview: function(txt, issucc) {
         var $login_layer = $("#login-layer");
         if (issucc)
