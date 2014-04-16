@@ -9,7 +9,7 @@
 
 // config file
 require __DIR__ . "/config.php";
-$allowed_modules = array('index_page');
+$allowed_modules = array('teacher_list');
 // default type: jsonp
 // default action: null (return error)
 $type = para('type');
@@ -17,9 +17,20 @@ if (is_null($type)) $type = 'jsonp';
 $callback = para('callback');
 if (is_null($callback)) $callback = 'callback';
 $action = para('action');
-if (in_array($allowed_modules, $action)) {
+if (in_array($action, $allowed_modules)) {
     include $action . ".php";
-    $ret_data = isset($ret_data) ? $ret_data : array('code' => '-1', 'msg' => 'UNOWN_ERROR');
+    if (isset($ret_data) && !is_null($ret_data)) {
+        $ret_data = array(
+            'code' => 0,
+            'msg' => 'ERR_SUCCESS',
+            'obj' => $ret_data
+        );
+    } else {
+        $ret_data = array(
+            'code' => -1,
+            'msg' => '未知错误'
+        );
+    }
     echo output($ret_data);
 } else {
     echo output(array('code' => -1, 'msg' => 'ERR_UNSPECIFIED_ACTION'));
@@ -41,6 +52,7 @@ function output($data) {
 }
 function curl($url, $data = null, $cookie = '') {
     // curl fetch with automatically gbk <-> utf-8 convertion.
+    global $base_url;
     $ua = 'Powered by Qiu Shi Chao zju-csweb optimizer / By Senorsen (Zhang Sen) @ QSCTech';
     $url = mb_convert_encoding($base_url . $url, 'gbk' ,'utf-8');
     $ch = curl_init($url);
