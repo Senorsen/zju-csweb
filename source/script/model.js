@@ -56,15 +56,20 @@ var url_handler = {
         }],
         task_obj: ["function", function($o) {
             var retobj = [], turl = [];
+            var appdurl = ['loc=%CA%B5%D1%E9%D7%F7%D2%B5%3E%3E%3E%C9%CF%BB%FA%CA%B5%D1%E9%3E%3E%CA%B5%D1%E9%C1%D0%B1%ED', '', '', '']
             $o.find("a").each(function() {
-                if (this.innerHTML == '上机实验') 
-                turl[0] = this.href.replace(/&amp;/g, '&');
-                if (this.innerHTML == '课程作业') 
-                turl[1] = this.href.replace(/&amp;/g, '&');
-                if (this.innerHTML == '课程资料') 
-                turl[2] = this.href.replace(/&amp;/g, '&');
-                if (this.innerHTML == '课程讲稿') 
-                turl[3] = this.href.replace(/&amp;/g, '&');
+                if (this.innerHTML == '上机实验') { 
+                    turl[0] = $(this).attr('href');//.replace(/&/g, '&');
+                }
+                if (this.innerHTML == '课程作业') {
+                    turl[1] = $(this).attr('href');//.replace(/&/g, '&');
+                }
+                if (this.innerHTML == '课程资料') {
+                    turl[2] = $(this).attr('href');//.replace(/&/g, '&');
+                }
+                if (this.innerHTML == '课程讲稿') {
+                    turl[3] = $(this).attr('href');//.replace(/&/g, '&');
+                }
             });
             for (var i in turl)
             {
@@ -82,19 +87,28 @@ var url_handler = {
                     default:
                         break;
                 }
-                retobj[i] = pagename+'?flag='+(i%2).toString()+'&'+$.param(getArgs(turl[i].match(/[^?]+$/)[0]));
+                retobj[i] = pagename+'?flag='+(i%2).toString()+'&'+appdurl[0]+'&'+$.param(getArgs(turl[i].match(/[^?]+$/)[0]));
             }
             return retobj;
+            function param_noencode(args) {
+                var s = '';
+                for (var i in args) {
+                    if (i == 'flag') continue;
+                    s += i + '=' + args[i] + '&';
+                }
+                return s;
+            }
             /**************************
                  以下func: getArgs 源自 -> 
              http://www.jsann.com/post/JS_GET_parameters_to_obtain.html
             **************************/
-            function getArgs(url){
+            function getArgs(url) {
                 var args = {};
                 var match = null;
                 var search = url;
-                var reg = /(?:([^&amp;]+)=([^&amp;]+))/g;
-                while((match = reg.exec(search))!==null){
+                var reg = /(?:([^&]+)=([^&]+))/g;
+                while ((match = reg.exec(search)) !== null) {
+                    if (match[1] == 'flag') continue;
                     args[match[1]] = match[2];
                 }
                 return args;
@@ -123,8 +137,8 @@ var url_handler = {
                         stt.push($c.eq(2).html());
                         ddl.push($c.eq(3).html());
                         dlr.push(th($c.eq(4).children('a').attr('href')));
-                        prb.push($c.eq(5).children('a').attr('href'));
-                        upl.push($c.eq(6).children('a').attr('href'));
+                        prb.push($c.eq(5).children('a')[0].href.replace(/http:\/\/.+?\/cstcx\/web\//, 'jobexam/'));
+                        upl.push($c.eq(6).children('a')[0].href.replace(/http:\/\/.+?\/cstcx\/web\//, 'jobexam/'));
                     });
                 } catch(e) {
                     // what to do?
@@ -296,7 +310,7 @@ cmodel.prototype = {
         if (typeof data == 'undefined') data = '';
         var f_obj = url_handler[location];
         var retstr = '';
-        fetch_callback_1 = this._fetch_cb;
+        var fetch_callback_1 = this._fetch_cb;
         if (typeof callback == 'undefined') callback = function() {};
         if (f_obj._method == 'GET')
         {

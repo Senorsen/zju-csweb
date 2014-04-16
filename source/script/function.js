@@ -5,10 +5,11 @@ function c_cntr()
 {
     this.path = this.getpath();
     this.page = this.getpage(this.path);
-    this.model = new cmodel(this.view);
     this.view = new tot_view(this.page);
+    this.model = new cmodel(this.view);
     //this.view_init();
     if (this.page == 'main') {
+        this.view.init_main();
         this.inittest();
     } else if (this.page == 'init') {
         this.fixinit();
@@ -73,6 +74,7 @@ c_cntr.prototype = {
                 t.view.pageSwitcher.setcallback(
                     function(id0) {
                         id0 = parseInt(id0);
+                        // 注：目前一共4个task
                         if (id0 >= 1 && id0 <= 4)
                         {
                             this.switchTask(id0 - 1);
@@ -93,8 +95,12 @@ c_cntr.prototype = {
         var ids = ['rp-experiment', 'rp-homework', 'rp-file', 'rp-document'];
         var t = this;
         t.model.fetch('task'+id, '', function(obj) {
+            window['task'+id] = obj;
             t.view.showtasktable($('#'+ids[id]), id, t.user_o.task_title[id], obj.notification, obj.data);
         });
+    },
+    upload_exam: function(exam_id) {
+        alert(window.task0.data.upl[exam_id]);
     }
 };
 

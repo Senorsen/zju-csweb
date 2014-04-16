@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="script/jquery.js"></script>
+<script src="script/jquery-migrate.js"></script>
+<script src="script/jquery.colorbox-min.js"></script>
+<link rel="stylesheet" href="colorbox_files/colorbox.css">
+<title>colorbox test</title>
+<script>
+function show() {
+    $.colorbox({
+        inline: true,
+        href: '#exam-upload-disp',
+        width: 500,
+        height: 400,
+    });
+}
+</script>
+</script>
+</head>
+
+<body>
+<div id="exam-upload-disp">
+<h2 style="font-weight: normal;">
+<span id="exam-upload-title">实验08报告及相关题目解答</span>上传</h2>
+<form id="frmExam" method="post" enctype="multipart/form-data">
+上传状态：<span id="exam-status">已经上传 于 1900-1-1</span> 
+&nbsp;<a href=".." id="exam-upload-download" target="_blank">下载</a><br>
+选择报告文档：<input type="file" id="exam-file" name="filmExam"><br>
+我有话要说：<br>
+<textarea id="exam-note" name="examInsNote" cols="40" rows="6">
+</textarea><br>
+<input type="button" id="exam-upload" value="上传"><br>
+<span id="exam-loading"><img alt="loading..." src="image/loading.svg">上传中……</span>
+<br>
+P.S.: 此处暂时先不美化了，有功能即可=-=
+</form>
+</div>
+<a onclick="show();">show</a>
+</body>
+</html>

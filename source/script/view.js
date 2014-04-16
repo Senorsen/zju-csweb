@@ -46,6 +46,7 @@ tab_switcher.prototype = {
         this.$layer.html('');
         this.$switcher.remove();
         return this;    //链式访问 2013年10月1日0:43:55 国庆节！
+                        // 2014年04月17日00:35:06 现在的小森森摸摸上边的小森森
     },
     setcallback: function(f, applyTo) {
         this.callback = typeof f=='function'?f:function(a){};
@@ -105,7 +106,7 @@ tab_switcher.prototype = {
 function tot_view(page)
 {
     if (page == 'main') {
-        this.init_main();
+        // wait for controller
     } else if (page == 'init') {
         // wait for controller
         // and do nothing here
@@ -156,7 +157,7 @@ tot_view.prototype = {
             var tbstr = '<table style="width:100%;font-size:12px;"><tr><td>序号</td><td>内容要求</td><td>开始日期</td><td>上传期限</td><td align="center">操作</td></tr>';
             for (var i in tabobj.no)
             {
-                tbstr += '<tr><td align="left">'+tabobj.no[i]+'</td><td>'+tabobj.req[i]+'</td><td>'+tabobj.stt[i]+'</td><td>'+tabobj.ddl[i]+'</td><td align="center"><a href="'+tabobj.dlr[i]+'" target="_blank">下载报告</a>&nbsp;&nbsp;&nbsp;<a onclick="controller.view.myAlert(\'功能真的暂未实现。。困死了想睡觉<br><del>其实这个功能真的不重要哒</del>\');">题目</a>&nbsp;&nbsp;<a onclick="controller.view.myAlert(\'啊！还没做完这个功能<del>，以后可能会有的o(╯□╰)o</del>\')">上传</a></td></tr>';
+                tbstr += '<tr><td align="left">'+tabobj.no[i]+'</td><td>'+tabobj.req[i]+'</td><td>'+tabobj.stt[i]+'</td><td>'+tabobj.ddl[i]+'</td><td align="center"><a href="'+tabobj.dlr[i]+'" target="_blank">下载报告</a>&nbsp;&nbsp;&nbsp;<a href="'+encodeURI(tabobj.prb[i])+'" target="_blank" onclick="if(1)controller.view.myAlert(\'功能真的暂未实现。。困死了想睡觉<br><del>其实这个功能真的不重要哒</del>\');">题目</a>&nbsp;&nbsp;<a onclick="controller.upload_exam('+i+');">上传</a></td></tr>';
             }
             tbstr += '</table>';
             $o.html('<div id="task'+id+'" class="fence"><h1>'+title+'</h1><div class="fence-content"><b>'+notice+'</b><br><br>'+tbstr+'</div>');
