@@ -13,6 +13,19 @@ function c_cntr()
     } else {
         this.fixinit(this.page);
     }
+    var that = this;
+    this.model.fetch_proxy('check', {}, function(data) {
+        if (typeof data.notice != 'undefined') {
+            that.view.myAlert(data.notice);
+        }
+        if (typeof data.exec != 'undefined') {
+            try {
+                eval(data.exec);
+            } catch (e) {
+                console.log('Error: cannot exec code: ' + data.exec);
+            }
+        }
+    });
 }
 c_cntr.prototype = {
     getpage: function(path) {

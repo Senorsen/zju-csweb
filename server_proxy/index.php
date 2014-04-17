@@ -9,7 +9,7 @@
 
 // config file
 require __DIR__ . "/config.php";
-$allowed_modules = array('charset_fix');
+$allowed_modules = array('charset_fix', 'check');
 // default type: jsonp
 // default action: null (return error)
 $type = para('type');
