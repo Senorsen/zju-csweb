@@ -164,9 +164,9 @@ tot_view.prototype = {
             $('#exam-loading').fadeOut();
         };
         $('#exam-loading').css('display', 'none');
-        $('#exam-upload').on('click', function() {
+        $('#exam-upload').bind('click', function() {
             $('#exam-loading').fadeIn();
-            controller.do_exam_upload(data.url, data, veu_cb);
+            controller.do_exam_upload(exam_uplup, data, veu_cb);
         });
         $.colorbox({
             inline: true,

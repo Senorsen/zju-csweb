@@ -131,7 +131,7 @@ c_cntr.prototype = {
     do_exam_upload: function(url, data, callback) {
         var that = this;
         $.ajaxFileUpload({
-            url: 'jobexam/' + url,
+            url: url, //'jobexam/' + url,
             secureuri: false,
             fileElementId: 'exam-file',
             dataType: 'html',
