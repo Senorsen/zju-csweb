@@ -59,16 +59,16 @@ var url_handler = {
             var appdurl = ['loc=%CA%B5%D1%E9%D7%F7%D2%B5%3E%3E%3E%C9%CF%BB%FA%CA%B5%D1%E9%3E%3E%CA%B5%D1%E9%C1%D0%B1%ED', '', '', '']
             $o.find("a").each(function() {
                 if (this.innerHTML == '上机实验') { 
-                    turl[0] = $(this).attr('href');//.replace(/&/g, '&');
+                    turl[0] = this.href;
                 }
                 if (this.innerHTML == '课程作业') {
-                    turl[1] = $(this).attr('href');//.replace(/&/g, '&');
+                    turl[1] = this.href;
                 }
                 if (this.innerHTML == '课程资料') {
-                    turl[2] = $(this).attr('href');//.replace(/&/g, '&');
+                    turl[2] = this.href;
                 }
                 if (this.innerHTML == '课程讲稿') {
-                    turl[3] = $(this).attr('href');//.replace(/&/g, '&');
+                    turl[3] = this.href;
                 }
             });
             for (var i in turl)
@@ -119,12 +119,30 @@ var url_handler = {
     logout: {
         _method: "GET"
     },
+    exam_upload_page: {
+        title: ["reg", /<font color="#ff0000"><b>(.*?)<\/b><\/font>/, 1],
+        upload_status: ["reg", /<font color='#ff0000'><b>(.*?)<\/b><\/font>/, 1],
+        upload_date: ["reg", /<\/font>\[上传日期：(.*?)\]/, 1],
+        upload_down: ["reg", /<a href='\.\.\/(.+?)' target='_blank'><font color='#0000ff'><b>/, 1],
+        url: ["reg", /document\.frmExam\.action="(.*?)"/, 1],
+        _method: "GET"
+    },
+    exam_upload_succ: {
+        result: ["function", function($o, html) {
+            if (/上传成功/.test(html)) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }],
+        _method: "POST"
+    },
     task0: {
         notification: ["function", function($o) {
             return $o.find("font").eq(0).parent().text();
         }],
         data: ["function", function($o) {
-            var no = [], req = [], stt = [], ddl = [], dlr = [], prb = [], upl = [];
+            var no = [], req = [], stt = [], ddl = [], dlr = [], prb = [], upl = [], uplup = [];
             var $trs = $o.find('tr[bordercolor="#e9f0f4"][bgcolor="#f8f3fb"]');
             if ($trs.length == 1 && $trs.children().length == 0) {
                 // nothing to do.
@@ -137,15 +155,16 @@ var url_handler = {
                         stt.push($c.eq(2).html());
                         ddl.push($c.eq(3).html());
                         dlr.push(th($c.eq(4).children('a').attr('href')));
-                        prb.push($c.eq(5).children('a')[0].href.replace(/http:\/\/.+?\/cstcx\/web\//, 'jobexam/'));
-                        upl.push($c.eq(6).children('a')[0].href.replace(/http:\/\/.+?\/cstcx\/web\//, 'jobexam/'));
+                        prb.push('jobexam/' + $c.eq(5).children('a').attr('href'));
+                        upl.push('jobexam/' + $c.eq(6).children('a').attr('href'));
+                        uplup.push((upl[uplup.length] + '&action=0').replace('uploadexamsub', 'Progress_upload'));
                     });
                 } catch(e) {
                     // what to do?
                 }
             }
             function th(u){return '../'+/teacher\.data.+$/.exec(u)[0]}
-            return {no:no,req:req,stt:stt,ddl:ddl,dlr:dlr,prb:prb,upl:upl};
+            return {no:no,req:req,stt:stt,ddl:ddl,dlr:dlr,prb:prb,upl:upl,uplup:uplup};
         }],
         _method: "GET"
     },
@@ -306,6 +325,14 @@ cmodel.prototype = {
             callback({code: -1, msg: 'ERR_METHOD_NOT_SUPPORTED'}, action);
         }
     },
+    fetch_sub: function(type, url, callback) {
+        var f_obj = url_handler[type];
+        var fetch_callback_1 = this._fetch_cb;
+        var fetch_sub_callback = function(data) {
+            callback(fetch_callback_1(data, f_obj));
+        };
+        $.get(url, {}, fetch_sub_callback, "html");
+    },
     fetch: function(location, data, callback) {
         if (typeof data == 'undefined') data = '';
         var f_obj = url_handler[location];
@@ -320,6 +347,9 @@ cmodel.prototype = {
         {
             $.post(url_list[location]+this.linksuffix, data, function(data){retstr=data;callback(fetch_callback_1(retstr, f_obj));}, "html");
         }
+    },
+    parse: function(action, retstr) {
+        this._fetch_cb(retstr, url_handler[action]);
     },
     _fetch_cb: function(retstr, f_obj) {
         var retobj = {};
@@ -349,7 +379,7 @@ cmodel.prototype = {
                 }
                 else
                 {
-                    retobj[e] = f_obj[e][1]($o);
+                    retobj[e] = f_obj[e][1]($o, retstr);
                 }
                 
             }

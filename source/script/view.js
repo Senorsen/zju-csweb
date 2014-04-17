@@ -148,6 +148,32 @@ tot_view.prototype = {
             $("#task-list").css('margin-left', '40px').append('<a x-url="'+url[i]+'" onclick="controller.view.pageSwitcher.switchTo('+(parseInt(i)+1)+')">'+title[i]+'</a>&nbsp;&nbsp;&nbsp;&nbsp;');
         }
     },
+    show_exam_upload: function(exam_id, exam_upl, exam_uplup, data) {
+        $('#exam-upload-title').html(data.title);
+        $('#exam-status').html(data.upload_status);
+        if (data.upload_status == '已经上传') {
+            $('#exam-status').append(', 日期：' + data.upload_date);
+            $('#exam-upload-download').css('display', 'inline-block').attr('href', data.upload_down);
+        }
+        if (data.upload_date == '1900-1-1') {
+            $('#exam-status').html('未上传');
+            $('#exam-upload-download').css('display', 'none');
+        }
+        var veu_cb = function() {
+            $('#exam-loading').fadeOut();
+        };
+        $('#exam-loading').css('display', 'none');
+        $('#exam-upload').on('click', function() {
+            $('#exam-loading').fadeIn();
+            controller.do_exam_upload(data.url, data, veu_cb);
+        });
+        $.colorbox({
+            inline: true,
+            href: '#exam-upload-disp',
+            width: 500,
+            height: 400
+        });
+    },
     showtasktable: function($o, id, title, notice, tabobj) {
         if (id <= 1)
         {

@@ -100,7 +100,32 @@ c_cntr.prototype = {
         });
     },
     upload_exam: function(exam_id) {
-        alert(window.task0.data.upl[exam_id]);
+        //alert(window.task0.data.upl[exam_id]);
+        window.upload_exam_id = exam_id;
+        var that = this;
+        var uecb = function(data) {
+            console.log(data);
+            that.view.show_exam_upload(exam_id, task0.data.upl[exam_id], task0.data.uplup[exam_id], data);
+        };
+        this.model.fetch_sub('exam_upload_page', task0.data.upl[exam_id], uecb);
+    },
+    do_exam_upload: function(url, data, callback) {
+        var that = this;
+        $.ajaxFileUpload({
+            url: 'jobexam/' + url,
+            secureuri: false,
+            fileElementId: 'exam-file',
+            dataType: 'html',
+            data: {
+                examInsNote: $('#exam-note').val()
+            },
+            success: function(data) {
+                callback(that.model.parse('exam_upload_succ', data));
+            },
+            error: function() {
+                that.view.myAlert('上传时遇到网络错误');
+            }
+        });
     }
 };
 
