@@ -44,6 +44,9 @@ c_cntr.prototype = {
         if (typeof check_list[ret[1]] != 'undefined') {
             type = check_list[ret[1]];
         }
+        if (/10\.77\.30\.\d+/.exec(ret[1])) {
+            type = 'program';
+        }
         return type + ret[2];
     },
     inittest: function() {
