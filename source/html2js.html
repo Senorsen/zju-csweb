@@ -50,7 +50,7 @@ function go()
 }
 var lazyload_js = '';
 $.get('script/lazyload.js', null, function(data){window.lazyload_js = data;}, 'text');
-$.get('index.html', null, function(data){$('#code').val(data);}, 'text');
+$.get('index.html?'+Math.random(), null, function(data){$('#code').val(data);}, 'text');
 </script>
 </head>
 
