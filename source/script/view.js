@@ -186,7 +186,7 @@ tot_view.prototype = {
                 tbstr += '<tr><td align="left">'+tabobj.no[i]+'</td><td>'+tabobj.req[i]+'</td><td>'+tabobj.stt[i]+'</td><td>'+tabobj.ddl[i]+'</td><td align="center"><a href="'+tabobj.dlr[i]+'" target="_blank">下载报告</a>&nbsp;&nbsp;&nbsp;<a href="'+encodeURI(tabobj.prb[i])+'" target="_blank" onclick="if(1)controller.view.myAlert(\'功能真的暂未实现。。困死了想睡觉<br><del>其实这个功能真的不重要哒</del>\');">题目</a>&nbsp;&nbsp;<a onclick="controller.upload_exam('+i+');">上传</a></td></tr>';
             }
             tbstr += '</table>';
-            $o.html('<div id="task'+id+'" class="fence"><h1>'+title+'</h1><div class="fence-content"><b>'+notice+'</b><br><br>'+tbstr+'</div>');
+            $o.html('<div id="task'+id+'" class="fence"><h1>'+title+'</h1><div class="fence-content"><a href="'+window.exam_stat+'" target="_blank">实验批改统计</a><br><b>'+notice+'</b><br><br>'+tbstr+'</div>');
             //天啊这是真的？这种奇葩的代码。。
         }
         else if (id == 2)

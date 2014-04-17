@@ -89,6 +89,7 @@ var url_handler = {
                 }
                 retobj[i] = pagename+'?flag='+(i%2).toString()+'&'+appdurl[0]+'&'+$.param(getArgs(turl[i].match(/[^?]+$/)[0]));
             }
+            window.exam_stat = 'jobexam/StuQueryScore.asp?flag=0&' + $.param(getArgs(turl[0].match(/[^?]+$/)[0]));
             return retobj;
             function param_noencode(args) {
                 var s = '';
