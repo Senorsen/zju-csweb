@@ -14,11 +14,14 @@ function go()
     var newscript = [], newscript_str = '';
     // 假设此处都是本地脚本（实际上编写时保证就可以了）
     var scripts_match = [];
-    var preg = /<script src="(.+)"><\/script>/g;
+    var pregs = [/<script src="(.+)"><\/script>/g, /<img(.+?)src="([^h][^"]*|.[^t][^"]*|..[^t][^"]+|...[^p][^"]+)"/g];
+    var preg = pregs[0];
     while ((scripts_match = preg.exec(oldcode)) != null) {
         newscript.push(scripts_match[1]);
         newscript_str += "'"+urlprefix+scripts_match[1]+"',";
     }
+    preg = pregs[1];
+    oldcode = oldcode.replace(preg, '<img $1 src="'+urlprefix+'$2"');
     oldcode = oldcode.replace(/<script(.+?)<\/script>/g, '');
     oldcode = oldcode.replace(/href="([^h][^"]*|.[^t][^"]*|..[^t][^"]+|...[^p][^"]+)/g, 'href=\"'+urlprefix+'$1');
     var txthead = /<head>([\s\S]+?)<\/head>/.exec(oldcode)[1];
