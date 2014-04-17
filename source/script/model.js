@@ -305,13 +305,9 @@ cmodel.prototype = {
             document.cookie = o2[0] + '=' + '' + "; expires=Mon, 26 Jul 1997 05:00:00 GMT; path=/cstcx";
         }
     },
-    fetch_proxy: function(action, callback, data) {
-        var fetch_method = 'POST';
-        if (typeof data == 'undefined' || data == '' || data == {} || data == []) {
-            data = undefined;
-            fetch_method = 'GET';
-            console.log('Proxy GET: ' + action);
-        }
+    fetch_proxy: function(action, data, callback) {
+        fetch_method = 'GET';
+        console.log('Proxy GET: ' + action);
         var _fpcb = function(data) {
             if (data.code == 0) {
                 callback(data.obj, action);
@@ -320,7 +316,7 @@ cmodel.prototype = {
             }
         };
         if (fetch_method == 'GET') {
-            $.get(url_wrap.senorsen_proxy + '?type=jsonp&action=' + action, {}, _fpcb, "jsonp");
+            $.get(url_wrap.senorsen_proxy + '?type=jsonp&action=' + action, data, _fpcb, "jsonp");
         } else {
             // 咋可能是post咧
             callback({code: -1, msg: 'ERR_METHOD_NOT_SUPPORTED'}, action);

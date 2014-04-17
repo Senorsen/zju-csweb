@@ -27,7 +27,7 @@ function go()
     var txthead = /<head>([\s\S]+?)<\/head>/.exec(oldcode)[1];
     var txtbody = /<body>([\s\S]+?)<\/body>/.exec(oldcode)[1];
     var result = html2js("document.head.innerHTML", txthead) + html2js("document.body.innerHTML", txtbody);
-    result = "function logme(txt){try{console.debug(txt);}catch(e){}}\nlogme('Starting to output html...');\n"+result+"logme('Finished.');\n\n/** LazyLoad https://github.com/rgrove/lazyload **/\n"+window.lazyload_js+"var js_path=["+newscript_str+"];"+"LazyLoad.js(js_path, function() {if(0)if(init)init()},{'charset': 'utf-8'});";
+    result = "function output_csweb_html() {function logme(txt){try{console.debug(txt);}catch(e){}}\nlogme('Starting to output html...');\n"+result+"logme('Finished.');}\n\n/** LazyLoad https://github.com/rgrove/lazyload **/\n"+window.lazyload_js+"var js_path=["+newscript_str+"];"+"LazyLoad.js(js_path, function() {if(0)if(init)init()},{'charset': 'utf-8'});";
     //我自己都觉得这里不太优雅，不过没关系，若干年后应该仍能记得
     //这是干嘛的。
     return result;

@@ -105,15 +105,16 @@ tab_switcher.prototype = {
 ////////////////////////////////////
 function tot_view(page)
 {
-    if (page == 'main') {
-        // wait for controller
-    } else if (page == 'init') {
+    if (page == 'csweb_main') {
+        this.init_main();
+    } else if (page == 'csweb_init') {
         // wait for controller
         // and do nothing here
     }
 }
 tot_view.prototype = {
     init_main: function() {
+        output_csweb_html();
         this.pageSwitcher = new tab_switcher($("#nav-top-content"), $("#rp-switcher-layer"), "inner");
         this.lessonSwitcher = new tab_switcher($("#lesson-intro-switcher-layer"), $("#lesson-intro-txt"), "inner");
     },

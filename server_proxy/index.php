@@ -9,7 +9,7 @@
 
 // config file
 require __DIR__ . "/config.php";
-$allowed_modules = array('teacher_list');
+$allowed_modules = array('charset_fix');
 // default type: jsonp
 // default action: null (return error)
 $type = para('type');
@@ -58,16 +58,14 @@ function output($data) {
 }
 function curl($url, $data = null, $cookie = '') {
     // curl fetch with automatically gbk <-> utf-8 convertion.
-    global $base_url;
     $ua = 'Powered by Qiu Shi Chao zju-csweb optimizer / By Senorsen (Zhang Sen) @ QSCTech';
-    $url = mb_convert_encoding($base_url . $url, 'gbk' ,'utf-8');
+    $url = mb_convert_encoding($url, 'gbk' ,'utf-8');
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HEADER, false);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
     if (!empty($cookie)) {
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            "Host: 10.71.45.100",
             "Cookie: $cookie",
             "User-Agent: $ua"
         ));

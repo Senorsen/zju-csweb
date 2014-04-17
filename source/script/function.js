@@ -8,30 +8,43 @@ function c_cntr()
     this.view = new tot_view(this.page);
     this.model = new cmodel(this.view);
     //this.view_init();
-    if (this.page == 'main') {
-        this.view.init_main();
+    if (this.page == 'csweb_main') {
         this.inittest();
-    } else if (this.page == 'init') {
-        this.fixinit();
+    } else {
+        this.fixinit(this.page);
     }
 }
 c_cntr.prototype = {
     getpage: function(path) {
-        var preg_search = /^\/cstcx\/web\/index\.asp/;
+        var preg_search = /csweb\/cstcx\/web\/index\.asp/;
         if (preg_search.exec(path)) {
-            return 'main';
+            return 'csweb_main';
+        } else if (path == 'csweb/'){
+            return 'csweb_init';
+        } else if (/^program/.exec(path)) {
+            return 'program_init';
         } else {
-            return 'init';
+            return 'unknown';
         }
     },
     getpath: function() {
         var href = location.href;
-        var preg = /^http:\/\/.+?(\/.*)/;
+        var preg = /^http:\/\/(.+?)(\/.*)/;
         var ret = preg.exec(href);
-        if (typeof ret[1] == 'undefined') {
-            ret[1] = '/';
+        if (typeof ret[2] == 'undefined') {
+            ret[2] = '/';
         }
-        return ret[1];
+        var check_list = {
+            'blackwhite.8866.org': 'csweb',
+            '10.71.45.100': 'csweb',
+            '10.77.30.31': 'program',
+            '10.77.30.33': 'program'
+        };
+        var type = 'unknown';
+        if (typeof check_list[ret[1]] != 'undefined') {
+            type = check_list[ret[1]];
+        }
+        return type + ret[2];
     },
     inittest: function() {
         if(/uid=\d+;/.test(document.cookie))
@@ -44,8 +57,8 @@ c_cntr.prototype = {
             console.debug('无登录状态');
         }
     },
-    fixinit: function() {
-        this.model.fetch_proxy("teacher_list", function(data) {
+    fixinit: function(which_page) {
+        this.model.fetch_proxy('charset_fix', {page: which_page}, function(data) {
             document.charset = data.charset;
             document.characterSet = data.charset;
             document.title = data.title;
@@ -129,9 +142,9 @@ c_cntr.prototype = {
     }
 };
 
-$(document).ready(function() {
+//$(document).ready(function() {
 	init();
-});
+//});
 
 function init()
 {
