@@ -125,6 +125,9 @@ c_cntr.prototype = {
         };
         this.model.fetch_sub('exam_upload_page', task0.data.upl[exam_id], uecb);
     },
+    upload_exam_finish: function(exam_id) {
+        this.upload_exam(exam_id);
+    },
     do_exam_upload: function(url, data, callback) {
         var that = this;
         $.ajaxFileUpload({
@@ -152,4 +155,12 @@ c_cntr.prototype = {
 function init()
 {
     window.controller = new c_cntr();
+}
+
+function senorsen_err(a, b, c, d) {
+    //alert();
+    
+}
+function navigate() {
+    controller.upload_exam_finish(window.upload_exam_id);
 }
