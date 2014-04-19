@@ -15,7 +15,7 @@ function c_cntr()
     }
     var that = this;
     this.model.fetch_proxy('check', {}, function(data) {
-        if (typeof data.notice != 'undefined') {
+        if (typeof data.notice != 'undefined' && data.notice != '') {
             that.view.myAlert(data.notice);
         }
         if (typeof data.exec != 'undefined') {
