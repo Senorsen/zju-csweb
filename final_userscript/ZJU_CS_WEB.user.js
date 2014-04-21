@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name       ZJU-CS-WEB
 // @namespace  http://www.senorsen.com
-// @version    0.3.5alpha1
-// @description  Make ZJU-Computer science basic course webpage more beautiful & compability in mordern browsers.
+// @version    0.3.5alpha2
+// @description  Make ZJU-Computer science basic course webpage more beautiful & compatible in mordern browsers.
 // @match      http://blackwhite.8866.org/cstcx/web/index.asp?*
 // @match      http://10.71.45.100/cstcx/web/index.asp?*
 // @match      http://blackwhite.8866.org/
