@@ -10,7 +10,7 @@ var url_list = {
 };
 var url_wrap = {
     'zju_csweb': '/', // temporarily useless!! don't believe it.
-    'senorsen_proxy': 'http://project.qsc.senorsen.com/zju-csweb/server_proxy/'
+    'senorsen_proxy': 'http://app.myqsc.com/zju-csweb/server_proxy/'
 };
 var url_handler = {
     index: {
