@@ -13,6 +13,7 @@
 // @updateURL   https://prj.senorsen.com/zju-csweb/final_userscript/ZJU_CS_WEB.meta.js
 // @downloadURL https://prj.senorsen.com/zju-csweb/final_userscript/ZJU_CS_WEB.user.js
 // @copyright  2013-2014, Senorsen
+// @author     Senorsen <sen@senorsen.com>
 // @run-at document-body
 // ==/UserScript==
 
